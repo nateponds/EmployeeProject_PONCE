@@ -46,7 +46,7 @@ public class MyDate {
     }
 
     public void display(){
-        System.out.printf("%d-%d-%d", this.day, this.month, this.year);
+        System.out.printf("%1d-%1d-%1d", this.day, this.month, this.year);
     }
 
     @Override

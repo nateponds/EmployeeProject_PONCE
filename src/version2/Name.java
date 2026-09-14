@@ -48,11 +48,21 @@ public class Name {
     }
 
     public void display(){
-        System.out.println(this.lastName + ", " + this.firstName + " " + this.middleName.charAt(0) + ".");
+        if(!this.middleName.equals("")) {
+            System.out.println(this.lastName + ", " + this.firstName + " " + this.middleName.charAt(0) + ".");
+        }
+        else{
+            System.out.println(this.lastName + ", " + this.firstName + " ");
+        }
     }
 
     @Override
     public String toString() {
-        return this.lastName + ", " + this.firstName + " " + this.middleName.charAt(0) + ".";
+        if(!this.middleName.equals("")){
+            return this.lastName + ", " + this.firstName + " " + this.middleName.charAt(0) + ".";
+        }
+        else{
+
+        }
     }
 }
