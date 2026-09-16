@@ -4,6 +4,8 @@
  */
 package version2;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author User
@@ -85,6 +87,23 @@ public class HourlyEmployee {
         double otPay = (this.totalHoursWorked - 40) * (this.ratePerHour * 1.5);
         return regPay + otPay;
     }
+
+    // TO DO - computeSalary(birthDate) -> bonus pay 5000
+    public double computeSalary(int monthToday){
+        if(this.totalHoursWorked <= 40){
+            return this.totalHoursWorked * this.ratePerHour;
+        }
+        double regPay = 40 * this.ratePerHour;
+        double otPay = (this.totalHoursWorked - 40) * (this.ratePerHour * 1.5);
+        double bonusPay = 0;
+        if (this.birthDate.getMonth() == monthToday){
+            bonusPay = 5000;
+        }
+            // TO DO - BIRTHDAY PAY
+
+        return regPay + otPay + bonusPay;
+    }
+
     
     public void displayHourEmployee(){
         System.out.println(

@@ -1,5 +1,7 @@
 package version2;
 
+import java.time.LocalDate;
+
 public class MyDate {
     // dateHired int int int
     // birthDate int int int
@@ -53,4 +55,5 @@ public class MyDate {
     public String toString() {
         return this.day + "-" + this.month + "-" + this.year;
     }
+
 }

@@ -62,7 +62,7 @@ public class Name {
             return this.lastName + ", " + this.firstName + " " + this.middleName.charAt(0) + ".";
         }
         else{
-
+            return this.lastName + ", " + this.firstName;
         }
     }
 }

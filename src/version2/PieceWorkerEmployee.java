@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package labactivity1;
+package version2;
 
 /**
  *
@@ -10,8 +10,7 @@ package labactivity1;
  */
 public class PieceWorkerEmployee {
     private int empID;
-    private Name empName;
-
+    private String empName;
     private int totalPiecesFinished;
     private double ratePerPiece;
 
@@ -75,8 +74,6 @@ public class PieceWorkerEmployee {
         double bonusPay = Math.floor(this.totalPiecesFinished / 100) * (10 * ratePerPiece);
         return basePay + bonusPay;
     }
-
-
     
     public void displayPieceWorkerEmployee(){
         System.out.println("ID: " + this.empID
