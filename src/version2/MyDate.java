@@ -1,7 +1,5 @@
 package version2;
 
-import java.time.LocalDate;
-
 public class MyDate {
     // dateHired int int int
     // birthDate int int int

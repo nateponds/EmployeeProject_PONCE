@@ -39,12 +39,28 @@ public class CommissionEmployee {
         this.totalSale = totalSale;
     }
 
+    public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    }
+
+    public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, double totalSale) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalSale);
+    }
+
     public int getEmpID() {
         return empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return empName;
+    }
+
+    public MyDate getBirthDate() {
+        return birthDate;
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
     }
 
     public double getTotalSale() {
@@ -55,28 +71,20 @@ public class CommissionEmployee {
         this.empID = empID;
     }
 
-    public void setTotalSale(double totalSale) {
-        this.totalSale = totalSale;
-    }
-
     public void setEmpName(Name empName) {
         this.empName = empName;
-    }
-
-    public MyDate getBirthDate() {
-        return birthDate;
     }
 
     public void setBirthDate(MyDate birthDate) {
         this.birthDate = birthDate;
     }
 
-    public MyDate getDateHired() {
-        return dateHired;
-    }
-
     public void setDateHired(MyDate dateHired) {
         this.dateHired = dateHired;
+    }
+
+    public void setTotalSale(double totalSale) {
+        this.totalSale = totalSale;
     }
 
     public double computeSalary(){
@@ -96,30 +104,19 @@ public class CommissionEmployee {
         return salary;
     }
 
-    public double computeSalary(MyDate dateToday){
-        double salary = 0;
-        if(this.totalSale < 50000){
-            salary = this.totalSale * 0.05;
+    public double computeSalary(int monthToday){
+        double bonusPay = 0;
+        if (this.birthDate.getMonth() == monthToday){
+            bonusPay = 5000;
         }
-        else if(this.totalSale >= 50000 && this.totalSale < 100000){
-            salary = this.totalSale * 0.1;
-        }
-        else if(this.totalSale >= 100000 && this.totalSale < 500000){
-            salary = this.totalSale * 0.15;
-        }
-        else if(this.totalSale >= 500000){
-            salary = this.totalSale * 0.2;
-        }
-
-        int bonusPay = 0;
-        // TO DO - BIRTHDAY PAY
-
-        return salary;
+        return this.computeSalary() + bonusPay;
     }
     
     public void displayCommissionEmployye(){
         System.out.println("ID: " + this.empID
                             + " | Name: " + this.empName
+                            + " | Birth Date: " + this.birthDate
+                            + " | Date Hired: " + this.dateHired
                             + " | Total Sale: P" + this.totalSale
         );
     }
@@ -128,6 +125,8 @@ public class CommissionEmployee {
     public String toString() {
         return "ID: " + this.empID
                 + " | Name: " + this.empName
+                + " | Birth Date: " + this.birthDate
+                + " | Date Hired: " + this.dateHired
                 + " | Total Sale: P" + this.totalSale
                 + " | Computed Salary: P" + this.computeSalary();
     }

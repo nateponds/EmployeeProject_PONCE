@@ -10,37 +10,61 @@ package version2;
  */
 public class BasePlusCommissionEmployee {
     private int empID;
-    private String empName;
+    private Name empName;
+    private MyDate birthDate;
+    private MyDate dateHired;
     private double totalSale;
     private double baseSalary;
 
     public BasePlusCommissionEmployee() {
         this.empID = 0;
-        this.empName = "N/A";
+        this.empName = new Name();
+        this.birthDate = new MyDate();
+        this.dateHired = new MyDate();
         this.totalSale = 0;
         this.baseSalary = 0;
     }
 
-    public BasePlusCommissionEmployee(int empID, String empName) {
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         this.empID = empID;
         this.empName = empName;
+        this.birthDate = birthDate;
+        this.dateHired = dateHired;
         this.totalSale = 0;
         this.baseSalary = 0;
     }
 
-    public BasePlusCommissionEmployee(int empID, String empName, double totalSale, double baseSalary) {
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
         this.empID = empID;
         this.empName = empName;
+        this.birthDate = birthDate;
+        this.dateHired = dateHired;
         this.totalSale = totalSale;
         this.baseSalary = baseSalary;
+    }
+
+    public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    }
+
+    public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, double totalSale, double baseSalary) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalSale, baseSalary);
     }
 
     public int getEmpID() {
         return empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return empName;
+    }
+
+    public MyDate getBirthDate() {
+        return birthDate;
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
     }
 
     public double getTotalSale() {
@@ -55,8 +79,16 @@ public class BasePlusCommissionEmployee {
         this.empID = empID;
     }
 
-    public void setEmpName(String empName) {
+    public void setEmpName(Name empName) {
         this.empName = empName;
+    }
+
+    public void setBirthDate(MyDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired;
     }
 
     public void setTotalSale(double totalSale) {
@@ -83,10 +115,20 @@ public class BasePlusCommissionEmployee {
         }
         return this.baseSalary + commission;
     }
+
+    public double computeSalary(int monthToday){
+        double bonusPay = 0;
+        if (this.birthDate.getMonth() == monthToday){
+            bonusPay = 5000;
+        }
+        return this.computeSalary() + bonusPay;
+    }
     
     public void displayBasePlusCommissionEmployee(){
         System.out.println("ID: " + this.empID
                             + " | Name: " + this.empName
+                            + " | Birth Date: " + this.birthDate
+                            + " | Date Hired: " + this.dateHired
                             + " | Total Sale: " + this.totalSale
                             + " | Base Salary: " + this.baseSalary
         );
@@ -109,6 +151,8 @@ public class BasePlusCommissionEmployee {
         }
         return "ID: " + this.empID
                 + " | Name: " + this.empName
+                + " | Birth Date: " + this.birthDate
+                + " | Date Hired: " + this.dateHired
                 + " | Total Sale: P" + this.totalSale
                 + " | Base Salary: P" + this.baseSalary
                 + " | Commission Rate: " + commission * 100 + "%"

@@ -4,8 +4,6 @@
  */
 package version2;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author User
@@ -27,29 +25,47 @@ public class HourlyEmployee {
         this.ratePerHour = 0;
     }
 
-    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         this.empID = empID;
-        this.empName = new Name(firstName, middleName, lastName);
-        this.birthDate = new MyDate(birthDay, birthMonth, birthYear);
-        this.dateHired = new MyDate(hiredDay, hiredMonth, hiredYear);
+        this.empName = empName;
+        this.birthDate = birthDate;
+        this.dateHired = dateHired;
         this.totalHoursWorked = 0f;
         this.ratePerHour = 0;
     }
 
-    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, float totalHoursWorked, double ratePerHour) {
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
         this.empID = empID;
-        this.empName = new Name(firstName, middleName, lastName);
-        this.birthDate = new MyDate(birthDay, birthMonth, birthYear);
-        this.dateHired = new MyDate(hiredDay, hiredMonth, hiredYear);
+        this.empName = empName;
+        this.birthDate = birthDate;
+        this.dateHired = dateHired;
         this.totalHoursWorked = totalHoursWorked;
         this.ratePerHour = ratePerHour;
+    }
+
+    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    }
+
+    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, float totalHoursWorked, double ratePerHour) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalHoursWorked, ratePerHour);
     }
 
     public int getEmpID() {
         return empID;
     }
 
-    public Name getEmpName() { return empName; }
+    public Name getEmpName() {
+        return empName;
+    }
+
+    public MyDate getBirthDate() {
+        return birthDate;
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
+    }
 
     public float getTotalHoursWorked() {
         return totalHoursWorked;
@@ -67,6 +83,14 @@ public class HourlyEmployee {
         this.empName = empName;
     }
 
+    public void setBirthDate(MyDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired;
+    }
+
     public void setTotalHoursWorked(float totalHoursWorked) {
         this.totalHoursWorked = totalHoursWorked;
     }
@@ -74,10 +98,6 @@ public class HourlyEmployee {
     public void setRatePerHour(double ratePerHour) {
         this.ratePerHour = ratePerHour;
     }
-
-    public void setDateHired(MyDate dateHired) { this.dateHired = dateHired; }
-
-    public void setBirthDate(MyDate birthDate) { this.birthDate = birthDate; }
 
     public double computeSalary(){
         if(this.totalHoursWorked <= 40){
@@ -88,20 +108,12 @@ public class HourlyEmployee {
         return regPay + otPay;
     }
 
-    // TO DO - computeSalary(birthDate) -> bonus pay 5000
     public double computeSalary(int monthToday){
-        if(this.totalHoursWorked <= 40){
-            return this.totalHoursWorked * this.ratePerHour;
-        }
-        double regPay = 40 * this.ratePerHour;
-        double otPay = (this.totalHoursWorked - 40) * (this.ratePerHour * 1.5);
         double bonusPay = 0;
         if (this.birthDate.getMonth() == monthToday){
             bonusPay = 5000;
         }
-            // TO DO - BIRTHDAY PAY
-
-        return regPay + otPay + bonusPay;
+        return this.computeSalary() + bonusPay;
     }
 
     
