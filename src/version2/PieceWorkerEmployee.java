@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package version2;
 
-/**
- *
- * @author User
- */
 public class PieceWorkerEmployee {
     private int empID;
     private Name empName;
@@ -35,12 +27,9 @@ public class PieceWorkerEmployee {
     }
 
     public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, int totalPiecesFinished, double ratePerPiece) {
-        this.empID = empID;
-        this.empName = empName;
-        this.birthDate = birthDate;
-        this.dateHired = dateHired;
-        this.totalPiecesFinished = totalPiecesFinished;
-        this.ratePerPiece = ratePerPiece;
+        this(empID, empName, birthDate, dateHired);
+        setTotalPiecesFinished(totalPiecesFinished);
+        setRatePerPiece(ratePerPiece);
     }
 
     public PieceWorkerEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -92,51 +81,49 @@ public class PieceWorkerEmployee {
     }
 
     public void setTotalPiecesFinished(int totalPiecesFinished) {
-        this.totalPiecesFinished = totalPiecesFinished;
+        if (totalPiecesFinished >= 0) {
+            this.totalPiecesFinished = totalPiecesFinished;
+        }
     }
 
     public void setRatePerPiece(double ratePerPiece) {
-        this.ratePerPiece = ratePerPiece;
+        if (ratePerPiece >= 0) {
+            this.ratePerPiece = ratePerPiece;
+        }
     }
-    
-    
-    public double computeSalary(){
-        double basePay = this.totalPiecesFinished * this.ratePerPiece;
-        double bonusPay = Math.floor(this.totalPiecesFinished / 100) * (10 * ratePerPiece);
+
+    public double computeSalary() {
+        double basePay = totalPiecesFinished * ratePerPiece;
+        double bonusPay = Math.floor(totalPiecesFinished / 100.0) * (10 * ratePerPiece);
         return basePay + bonusPay;
     }
 
-    public double computeSalary(int monthToday){
+    public double computeSalary(int currentMonth) {
         double birthdayBonus = 0;
-        if (this.birthDate.getMonth() == monthToday){
+        if (birthDate.getMonth() == currentMonth) {
             birthdayBonus = 5000;
         }
-        return this.computeSalary() + birthdayBonus;
+        return computeSalary() + birthdayBonus;
     }
-    
-    public void displayPieceWorkerEmployee(){
-        System.out.println("ID: " + this.empID
-                            + " | Name: " + this.empName
-                            + " | Birth Date: " + this.birthDate
-                            + " | Date Hired: " + this.dateHired
-                            + " | Total Pieces Finished: " + this.totalPiecesFinished
-                            + " | Rate Per Piece: " + this.ratePerPiece
+
+    public void displayPieceWorkerEmployee() {
+        System.out.println("ID: " + empID
+                            + " | Name: " + empName
+                            + " | Birth Date: " + birthDate
+                            + " | Date Hired: " + dateHired
+                            + " | Total Pieces Finished: " + totalPiecesFinished
+                            + " | Rate Per Piece: P" + String.format(java.util.Locale.US, "%.2f", ratePerPiece)
         );
     }
 
     @Override
     public String toString() {
-        return "ID: " + this.empID
-                + " | Name: " + this.empName
-                + " | Birth Date: " + this.birthDate
-                + " | Date Hired: " + this.dateHired
-                + " | Total Pieces Finished: " + this.totalPiecesFinished
-                + " | Rate Per Piece: P" + this.ratePerPiece
-                + " | Computed Salary: P" + this.computeSalary();
+        return "ID: " + empID
+                + " | Name: " + empName
+                + " | Birth Date: " + birthDate
+                + " | Date Hired: " + dateHired
+                + " | Total Pieces Finished: " + totalPiecesFinished
+                + " | Rate Per Piece: P" + String.format(java.util.Locale.US, "%.2f", ratePerPiece)
+                + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
     }
-    
-    
-    
-    
-    
 }

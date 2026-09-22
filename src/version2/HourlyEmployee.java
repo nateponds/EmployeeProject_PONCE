@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package version2;
 
-/**
- *
- * @author User
- */
+import java.util.Locale;
+
 public class HourlyEmployee {
     private int empID;
     private Name empName;
@@ -35,12 +29,9 @@ public class HourlyEmployee {
     }
 
     public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
-        this.empID = empID;
-        this.empName = empName;
-        this.birthDate = birthDate;
-        this.dateHired = dateHired;
-        this.totalHoursWorked = totalHoursWorked;
-        this.ratePerHour = ratePerHour;
+        this(empID, empName, birthDate, dateHired);
+        setTotalHoursWorked(totalHoursWorked);
+        setRatePerHour(ratePerHour);
     }
 
     public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -92,53 +83,57 @@ public class HourlyEmployee {
     }
 
     public void setTotalHoursWorked(float totalHoursWorked) {
-        this.totalHoursWorked = totalHoursWorked;
+        if (totalHoursWorked >= 0) {
+            this.totalHoursWorked = totalHoursWorked;
+        }
     }
 
     public void setRatePerHour(double ratePerHour) {
-        this.ratePerHour = ratePerHour;
+        if (ratePerHour >= 0) {
+            this.ratePerHour = ratePerHour;
+        }
     }
 
-    public double computeSalary(){
-        if(this.totalHoursWorked <= 40){
-            return this.totalHoursWorked * this.ratePerHour;
+    public double computeSalary() {
+        if (totalHoursWorked <= 40) {
+            return totalHoursWorked * ratePerHour;
         }
-        double regPay = 40 * this.ratePerHour;
-        double otPay = (this.totalHoursWorked - 40) * (this.ratePerHour * 1.5);
+        double regPay = 40 * ratePerHour;
+        double otPay = (totalHoursWorked - 40) * (ratePerHour * 1.5);
         return regPay + otPay;
     }
 
-    public double computeSalary(int monthToday){
+    public double computeSalary(int currentMonth) {
         double bonusPay = 0;
-        if (this.birthDate.getMonth() == monthToday){
+        if (birthDate.getMonth() == currentMonth) {
             bonusPay = 5000;
         }
-        return this.computeSalary() + bonusPay;
+        return computeSalary() + bonusPay;
     }
 
-    
-    public void displayHourEmployee(){
+    public void displayHourEmployee() {
         System.out.println(
-            "ID: " + this.empID 
-            + " | Name: " + this.empName
-            + " | Birth Date: " + this.birthDate
-            + " | Date Hired: " + this.dateHired
-            + " | Total Hours Worked: " + this.totalHoursWorked
-            + " | Rate per hour: P" + this.ratePerHour
+            "ID: " + empID
+            + " | Name: " + empName
+            + " | Birth Date: " + birthDate
+            + " | Date Hired: " + dateHired
+            + " | Total Hours Worked: " + totalHoursWorked
+            + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
         );
     }
 
     @Override
     public String toString() {
-        return "ID: " + this.empID 
-                + " | Name: " + this.empName
-                + " | Birth Date: " + this.birthDate
-                + " | Date Hired: " + this.dateHired
-                + " | Total Hours Worked: " + this.totalHoursWorked
-                + " | Rate per hour: P" + this.ratePerHour
-                + " | Computed Salary: P" + this.computeSalary();
+        return "ID: " + empID
+                + " | Name: " + empName
+                + " | Birth Date: " + birthDate
+                + " | Date Hired: " + dateHired
+                + " | Total Hours Worked: " + totalHoursWorked
+                + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
+                + " | Computed Salary: P" + String.format(Locale.US, "%.2f", computeSalary());
     }
-    
-    
-    
+
+    static String money(double amount) {
+        return String.format(Locale.US, "₱%,.2f", amount);
+    }
 }

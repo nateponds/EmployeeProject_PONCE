@@ -1,9 +1,10 @@
 package version2;
 
 public class MyDate {
-    // dateHired int int int
-    // birthDate int int int
-    // if it is the employee's birthmonth then they will have an added salary of 5000
+    private static final String[] MONTHS = {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
 
     private int day;
     private int month;
@@ -16,9 +17,10 @@ public class MyDate {
     }
 
     public MyDate(int day, int month, int year) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        this();
+        setDay(day);
+        setMonth(month);
+        setYear(year);
     }
 
     public int getDay() {
@@ -34,24 +36,27 @@ public class MyDate {
     }
 
     public void setDay(int day) {
-        this.day = day;
+        if (day >= 1 && day <= 31) {
+            this.day = day;
+        }
     }
 
     public void setMonth(int month) {
-        this.month = month;
+        if (month >= 1 && month <= 12) {
+            this.month = month;
+        }
     }
 
     public void setYear(int year) {
         this.year = year;
     }
 
-    public void display(){
-        System.out.printf("%1d-%1d-%1d", this.day, this.month, this.year);
+    public void displayDate() {
+        System.out.println(toString());
     }
 
     @Override
     public String toString() {
-        return this.day + "-" + this.month + "-" + this.year;
+        return String.format("%02d %s %d", day, MONTHS[month - 1], year);
     }
-
 }

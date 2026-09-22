@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package version2;
 
-/**
- *
- * @author User
- */
 public class BasePlusCommissionEmployee {
     private int empID;
     private Name empName;
@@ -35,12 +27,9 @@ public class BasePlusCommissionEmployee {
     }
 
     public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
-        this.empID = empID;
-        this.empName = empName;
-        this.birthDate = birthDate;
-        this.dateHired = dateHired;
-        this.totalSale = totalSale;
-        this.baseSalary = baseSalary;
+        this(empID, empName, birthDate, dateHired);
+        setTotalSale(totalSale);
+        setBaseSalary(baseSalary);
     }
 
     public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -92,74 +81,61 @@ public class BasePlusCommissionEmployee {
     }
 
     public void setTotalSale(double totalSale) {
-        this.totalSale = totalSale;
+        if (totalSale >= 0) {
+            this.totalSale = totalSale;
+        }
     }
 
     public void setBaseSalary(double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-    
-    public double computeSalary(){
-        double commission = 0;
-        if(this.totalSale < 50000){
-            commission = this.totalSale * 0.05;
+        if (baseSalary >= 0) {
+            this.baseSalary = baseSalary;
         }
-        else if(this.totalSale >= 50000 && this.totalSale < 100000){
-            commission = this.totalSale * 0.1;
-        }
-        else if(this.totalSale >= 100000 && this.totalSale < 500000){
-            commission = this.totalSale * 0.15;
-        }
-        else if(this.totalSale >= 500000){
-            commission = this.totalSale * 0.2;
-        }
-        return this.baseSalary + commission;
     }
 
-    public double computeSalary(int monthToday){
+    private double getCommissionRate() {
+        if (totalSale < 50000) {
+            return 0.05;
+        }
+        if (totalSale < 100000) {
+            return 0.10;
+        }
+        if (totalSale < 500000) {
+            return 0.15;
+        }
+        return 0.20;
+    }
+
+    public double computeSalary() {
+        return baseSalary + (totalSale * getCommissionRate());
+    }
+
+    public double computeSalary(int currentMonth) {
         double bonusPay = 0;
-        if (this.birthDate.getMonth() == monthToday){
+        if (birthDate.getMonth() == currentMonth) {
             bonusPay = 5000;
         }
-        return this.computeSalary() + bonusPay;
+        return computeSalary() + bonusPay;
     }
-    
-    public void displayBasePlusCommissionEmployee(){
-        System.out.println("ID: " + this.empID
-                            + " | Name: " + this.empName
-                            + " | Birth Date: " + this.birthDate
-                            + " | Date Hired: " + this.dateHired
-                            + " | Total Sale: " + this.totalSale
-                            + " | Base Salary: " + this.baseSalary
+
+    public void displayBasePlusCommissionEmployee() {
+        System.out.println("ID: " + empID
+                            + " | Name: " + empName
+                            + " | Birth Date: " + birthDate
+                            + " | Date Hired: " + dateHired
+                            + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
+                            + " | Base Salary: P" + String.format(java.util.Locale.US, "%.2f", baseSalary)
         );
     }
 
     @Override
     public String toString() {
-        double commission = 0;
-        if(this.totalSale < 50000){
-            commission = 0.05;
-        }
-        else if(this.totalSale >= 50000 && this.totalSale < 100000){
-            commission = 0.1;
-        }
-        else if(this.totalSale >= 100000 && this.totalSale < 500000){
-            commission = 0.15;
-        }
-        else if(this.totalSale >= 500000){
-            commission = 0.2;
-        }
-        return "ID: " + this.empID
-                + " | Name: " + this.empName
-                + " | Birth Date: " + this.birthDate
-                + " | Date Hired: " + this.dateHired
-                + " | Total Sale: P" + this.totalSale
-                + " | Base Salary: P" + this.baseSalary
-                + " | Commission Rate: " + commission * 100 + "%"
-                + " | Computed Salary: P" + this.computeSalary();
+        return "ID: " + empID
+                + " | Name: " + empName
+                + " | Birth Date: " + birthDate
+                + " | Date Hired: " + dateHired
+                + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
+                + " | Base Salary: P" + String.format(java.util.Locale.US, "%.2f", baseSalary)
+                + " | Commission Rate: " + (getCommissionRate() * 100) + "%"
+                + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
     }
-    
-    
-    
-    
 }
