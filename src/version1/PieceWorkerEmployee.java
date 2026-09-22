@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package labactivity1;
+package version1;
 
 /**
  *
@@ -10,7 +10,7 @@ package labactivity1;
  */
 public class PieceWorkerEmployee {
     private int empID;
-    private Name empName;
+    private String empName;
 
     private int totalPiecesFinished;
     private double ratePerPiece;
