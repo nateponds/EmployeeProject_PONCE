@@ -50,11 +50,7 @@ public class HourlyEmployee extends Employee{
     }
 
     public double computeSalary(int currentMonth) {
-        double bonusPay = 0;
-        if (getBirthDate().getMonth() == currentMonth) {
-            bonusPay = 5000;
-        }
-        return computeSalary() + bonusPay;
+        return computeSalary() + super.computeSalary(currentMonth);
     }
 
     public void displayHourEmployee() {

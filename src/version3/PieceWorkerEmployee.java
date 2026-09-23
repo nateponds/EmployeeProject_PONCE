@@ -45,11 +45,7 @@ public class PieceWorkerEmployee extends Employee {
     }
 
     public double computeSalary(int currentMonth) {
-        double birthdayBonus = 0;
-        if (getBirthDate().getMonth() == currentMonth) {
-            birthdayBonus = 5000;
-        }
-        return computeSalary() + birthdayBonus;
+        return computeSalary() + super.computeSalary(currentMonth);
     }
 
     public void displayPieceWorkerEmployee() {
