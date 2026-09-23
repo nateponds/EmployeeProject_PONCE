@@ -1,5 +1,7 @@
 package version3;
 
+import java.util.Objects;
+
 public class BasePlusCommissionEmployee extends Employee {
     private double totalSale;
     private double baseSalary;
@@ -91,5 +93,20 @@ public class BasePlusCommissionEmployee extends Employee {
                 + " | Base Salary: P" + String.format(java.util.Locale.US, "%.2f", baseSalary)
                 + " | Commission Rate: " + (getCommissionRate() * 100) + "%"
                 + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        BasePlusCommissionEmployee other = (BasePlusCommissionEmployee) obj;
+        return Double.compare(totalSale, other.totalSale) == 0
+                && Double.compare(baseSalary, other.baseSalary) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), totalSale, baseSalary);
     }
 }

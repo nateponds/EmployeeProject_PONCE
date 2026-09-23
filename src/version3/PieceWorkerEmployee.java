@@ -1,10 +1,16 @@
 package version3;
 
+import java.util.Objects;
+
 public class PieceWorkerEmployee extends Employee {
     private int totalPiecesFinished;
     private double ratePerPiece;
 
-    public PieceWorkerEmployee() {}
+    public PieceWorkerEmployee() {
+        super();
+        this.totalPiecesFinished = 0;
+        this.ratePerPiece = 0;
+    }
 
     public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         super(empID, empName, birthDate, dateHired);
@@ -75,5 +81,20 @@ public class PieceWorkerEmployee extends Employee {
                 + " | Total Pieces Finished: " + totalPiecesFinished
                 + " | Rate Per Piece: P" + String.format(java.util.Locale.US, "%.2f", ratePerPiece)
                 + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        PieceWorkerEmployee other = (PieceWorkerEmployee) obj;
+        return totalPiecesFinished == other.totalPiecesFinished
+                && Double.compare(ratePerPiece, other.ratePerPiece) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), totalPiecesFinished, ratePerPiece);
     }
 }

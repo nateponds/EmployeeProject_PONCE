@@ -1,5 +1,7 @@
 package version3;
 
+import java.util.Objects;
+
 public class CommissionEmployee extends Employee {
     private double totalSale;
 
@@ -74,5 +76,19 @@ public class CommissionEmployee extends Employee {
                 + " | Date Hired: " + getDateHired()
                 + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
                 + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        CommissionEmployee other = (CommissionEmployee) obj;
+        return Double.compare(totalSale, other.totalSale) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), totalSale);
     }
 }

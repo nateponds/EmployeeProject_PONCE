@@ -1,5 +1,7 @@
 package version3;
 
+import java.util.Objects;
+
 public class Employee implements Cloneable{
     private int empID;
     private Name empName;
@@ -63,4 +65,54 @@ public class Employee implements Cloneable{
         }
         return 0;
     }
+
+    @Override
+    public Employee clone() throws CloneNotSupportedException {
+        Employee cloned = (Employee) super.clone();
+        if (empName != null) {
+            cloned.empName = empName.clone();
+        }
+        if (birthDate != null) {
+            cloned.birthDate = birthDate.clone();
+        }
+        if (dateHired != null) {
+            cloned.dateHired = dateHired.clone();
+        }
+        return cloned;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Employee other = (Employee) obj;
+        return empID == other.empID
+                && Objects.equals(empName, other.empName)
+                && Objects.equals(birthDate, other.birthDate)
+                && Objects.equals(dateHired, other.dateHired);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empID, empName, birthDate, dateHired);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee ID: " + empID + "\n Employee Name: " + empName + "\n Birth Date: " + birthDate + "\n Date Hired: " + dateHired;
+    }
+
+    @Override
+    public void displayEmployee() {
+        System.out.println("Employee ID: " + empID);
+        System.out.println("Employee Name: " + empName);
+        System.out.println("Birth Date: " + birthDate);
+        System.out.println("Date Hired: " + dateHired);
+    }
+
+    
 }

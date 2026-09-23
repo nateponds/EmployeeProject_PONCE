@@ -1,5 +1,7 @@
 package version3;
 
+import java.util.Objects;
+
 public class Name implements Cloneable{
     private String firstName;
     private String middleName;
@@ -80,20 +82,18 @@ public class Name implements Cloneable{
     }
 
     @Override
-    public boolean equals(Name otherName) {
-        if(this == otherName) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if(otherName == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if(this.getClass() != otherName.getClass()) {
-            return false;
-        }
-        return this.firstName.equals(otherName.firstName) &&
-               this.middleName.equals(otherName.middleName) &&
-               this.lastName.equals(otherName.lastName) &&
-               this.suffix.equals(otherName.suffix);
+        Name otherName = (Name) obj;
+        return Objects.equals(firstName, otherName.firstName)
+                && Objects.equals(middleName, otherName.middleName)
+                && Objects.equals(lastName, otherName.lastName)
+                && Objects.equals(suffix, otherName.suffix);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package version3;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class HourlyEmployee extends Employee{
     private float totalHoursWorked;
@@ -89,5 +90,25 @@ public class HourlyEmployee extends Employee{
 
     static String money(double amount) {
         return String.format(Locale.US, "₱%,.2f", amount);
+    }
+
+    @Override
+    public HourlyEmployee clone() throws CloneNotSupportedException {
+        return (HourlyEmployee) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        HourlyEmployee other = (HourlyEmployee) obj;
+        return Float.compare(totalHoursWorked, other.totalHoursWorked) == 0
+                && Double.compare(ratePerHour, other.ratePerHour) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), totalHoursWorked, ratePerHour);
     }
 }

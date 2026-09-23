@@ -1,5 +1,7 @@
 package version3;
 
+import java.util.Objects;
+
 public class MyDate implements Cloneable {
     private static final String[] MONTHS = {
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -80,5 +82,27 @@ public class MyDate implements Cloneable {
     @Override
     public String toString() {
         return String.format("%02d %s %d", day, MONTHS[month - 1], year);
+    }
+
+    @Override
+    public MyDate clone() throws CloneNotSupportedException {
+        return (MyDate) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        MyDate other = (MyDate) obj;
+        return day == other.day && month == other.month && year == other.year;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(day, month, year);
     }
 }
