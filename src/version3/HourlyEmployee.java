@@ -6,11 +6,23 @@ public class HourlyEmployee extends Employee{
     private float totalHoursWorked;
     private double ratePerHour;
 
-    public HourlyEmployee() {}
+    public HourlyEmployee() {
+        super();
+        this.totalHoursWorked = 0f;
+        this.ratePerHour = 0;
+    }
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {}
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalHoursWorked = 0f;
+        this.ratePerHour = 0;
+    }
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {}
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalHoursWorked = totalHoursWorked;
+        this.ratePerHour = ratePerHour;
+    }
 
     public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));

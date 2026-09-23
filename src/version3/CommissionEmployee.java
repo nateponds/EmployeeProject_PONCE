@@ -3,11 +3,20 @@ package version3;
 public class CommissionEmployee extends Employee {
     private double totalSale;
 
-    public CommissionEmployee() {}
+    public CommissionEmployee() {
+        super();
+        this.totalSale = 0;
+    }
 
-    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {}
+    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalSale = 0;
+    }
 
-    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {}
+    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalSale = totalSale;
+    }
 
     public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));

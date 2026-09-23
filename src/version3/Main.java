@@ -1,54 +1,30 @@
 package version3;
 
+import java.util.Locale;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("--- Name & Date Output Verification ---");
-        Name sampleName = new Name("Alice", "Marie", "Smith");
-        MyDate sampleDate = new MyDate(18, 9, 2026);
-        System.out.print("Name: ");
-        sampleName.displayName();
-        System.out.print("Date: ");
-        sampleDate.displayDate();
+    private static final int TARGET_MONTH = 9;
 
-        Name alice = new Name("Alice", "Marie", "Smith");
-        MyDate aliceBirth = new MyDate(18, 9, 2000);
-        MyDate aliceHired = new MyDate(1, 6, 2022);
-
-        HourlyEmployee hourlyPartial = new HourlyEmployee();
-        hourlyPartial.setEmpID(100);
-        hourlyPartial.setEmpName(new Name("Liam", "Owen", "Cruz"));
-        hourlyPartial.setBirthDate(new MyDate(3, 1, 1999));
-        hourlyPartial.setDateHired(new MyDate(10, 3, 2021));
-        hourlyPartial.setTotalHoursWorked(30);
-        hourlyPartial.setRatePerHour(150);
-
-        HourlyEmployee hourlyFull = new HourlyEmployee(101, alice, aliceBirth, aliceHired, 45f, 200);
-
-        PieceWorkerEmployee piecePartial = new PieceWorkerEmployee();
-        piecePartial.setEmpID(200);
-        piecePartial.setEmpName(new Name("Bob", "Carlos", "Jones", "Jr."));
-        piecePartial.setBirthDate(new MyDate(5, 4, 1998));
-        piecePartial.setDateHired(new MyDate(15, 1, 2023));
-        piecePartial.setTotalPiecesFinished(250);
-        piecePartial.setRatePerPiece(15);
-
-        PieceWorkerEmployee pieceFull = new PieceWorkerEmployee(
-            201,
-            new Name("Nina", "Paz", "Reyes"),
-            new MyDate(22, 11, 1997),
-            new MyDate(2, 8, 2020),
-            120,
-            20
+    public static void main(String[] args) throws CloneNotSupportedException {
+        HourlyEmployee hourly = new HourlyEmployee(
+            101,
+            new Name("Alice", "Marie", "Smith"),
+            new MyDate(18, 9, 2000),
+            new MyDate(1, 6, 2022),
+            45f,
+            200
         );
 
-        CommissionEmployee commissionPartial = new CommissionEmployee();
-        commissionPartial.setEmpID(300);
-        commissionPartial.setEmpName(new Name("Eva", "Luna", "Santos"));
-        commissionPartial.setBirthDate(new MyDate(9, 2, 1995));
-        commissionPartial.setDateHired(new MyDate(4, 7, 2019));
-        commissionPartial.setTotalSale(80000);
+        PieceWorkerEmployee piece = new PieceWorkerEmployee(
+            201,
+            new Name("Bob", "Carlos", "Jones", "Jr."),
+            new MyDate(5, 4, 1998),
+            new MyDate(15, 1, 2023),
+            250,
+            15
+        );
 
-        CommissionEmployee commissionFull = new CommissionEmployee(
+        CommissionEmployee commission = new CommissionEmployee(
             301,
             new Name("Marco", "Diaz", "Lim"),
             new MyDate(14, 12, 1992),
@@ -56,15 +32,7 @@ public class Main {
             150000
         );
 
-        BasePlusCommissionEmployee basePartial = new BasePlusCommissionEmployee();
-        basePartial.setEmpID(400);
-        basePartial.setEmpName(new Name("Sofia", "Grace", "Tan"));
-        basePartial.setBirthDate(new MyDate(30, 6, 1994));
-        basePartial.setDateHired(new MyDate(11, 10, 2021));
-        basePartial.setTotalSale(60000);
-        basePartial.setBaseSalary(10000);
-
-        BasePlusCommissionEmployee baseFull = new BasePlusCommissionEmployee(
+        BasePlusCommissionEmployee basePlus = new BasePlusCommissionEmployee(
             401,
             new Name("Diego", "Ramos", "Garcia"),
             new MyDate(8, 3, 1990),
@@ -73,85 +41,93 @@ public class Main {
             25000
         );
 
-        System.out.println("\n---------------------------------------------------------------------------------------\nDISPLAY EXECUTION\n---------------------------------------------------------------------------------------\n");
+        Employee[] employees = { hourly, piece, commission, basePlus };
 
-        hourlyPartial.displayHourEmployee();
-        hourlyFull.displayHourEmployee();
-        System.out.println("");
-
-        piecePartial.displayPieceWorkerEmployee();
-        pieceFull.displayPieceWorkerEmployee();
-        System.out.println("");
-
-        commissionPartial.displayCommissionEmployye();
-        commissionFull.displayCommissionEmployye();
-        System.out.println("");
-
-        basePartial.displayBasePlusCommissionEmployee();
-        baseFull.displayBasePlusCommissionEmployee();
-
-        System.out.println("\n---------------------------------------------------------------------------------------\n");
-
-        System.out.println("\n---------------------------------------------------------------------------------------\nSTRING CONVERSION EXECUTION\n---------------------------------------------------------------------------------------\n");
-
-        System.out.println(hourlyPartial);
-        System.out.println(hourlyFull);
-        System.out.println("");
-
-        System.out.println(piecePartial);
-        System.out.println(pieceFull);
-        System.out.println("");
-
-        System.out.println(commissionPartial);
-        System.out.println(commissionFull);
-        System.out.println("");
-
-        System.out.println(basePartial);
-        System.out.println(baseFull);
-
-        System.out.println("\n---------------------------------------------------------------------------------------\n");
-
-        System.out.println("\n---------------------------------------------------------------------------------------\nBIRTHDAY INCENTIVE CHECK\n---------------------------------------------------------------------------------------\n");
-        printBirthdayCheck(hourlyFull);
-        printBirthdayCheck(pieceFull);
-        printBirthdayCheck(commissionFull);
-        printBirthdayCheck(baseFull);
-        System.out.println("\n---------------------------------------------------------------------------------------\n");
+        printPayrollReport(employees, TARGET_MONTH);
+        printEqualsHashCodeTests(hourly, piece);
+        printDeepCloneVerification(hourly);
     }
 
-    private static void printBirthdayCheck(HourlyEmployee employee) {
-        printBirthdayLine(employee.getEmpName().toString(), employee.getBirthDate().getMonth(), employee);
+    private static void printPayrollReport(Employee[] employees, int targetMonth) {
+        System.out.println("======================================================================");
+        System.out.println("POLYMORPHIC PAYROLL REPORT (Target Month: " + monthName(targetMonth) + ")");
+        System.out.println("======================================================================");
+
+        for (int i = 0; i < employees.length; i++) {
+            Employee employee = employees[i];
+            double basePay = employee.computeSalary();
+            double totalPayout = employee.computeSalary(targetMonth);
+            double birthdayBonus = totalPayout - basePay;
+            boolean eligible = employee.getBirthDate().getMonth() == targetMonth;
+
+            System.out.println((i + 1) + ". " + formatEmployeeHeader(employee));
+            System.out.println("   Base Pay: " + money(basePay)
+                + " | Birthday Bonus: " + money(birthdayBonus)
+                + " (" + (eligible ? "Eligible" : "Ineligible") + ")");
+            System.out.println("   Total Payout: " + money(totalPayout));
+            if (i < employees.length - 1) {
+                System.out.println();
+            }
+        }
+        System.out.println();
     }
 
-    private static void printBirthdayCheck(PieceWorkerEmployee employee) {
-        int birthMonth = employee.getBirthDate().getMonth();
-        int otherMonth = birthMonth == 12 ? 1 : birthMonth + 1;
-        System.out.println(employee.getEmpName());
-        System.out.printf("Regular Month (%s) Salary: %s%n", monthName(otherMonth), HourlyEmployee.money(employee.computeSalary(otherMonth)));
-        System.out.printf("Birth Month (%s) Salary (+P5,000.00): %s%n%n", monthName(birthMonth), HourlyEmployee.money(employee.computeSalary(birthMonth)));
+    private static void printEqualsHashCodeTests(HourlyEmployee emp1, Employee emp2) {
+        HourlyEmployee emp1Identical = new HourlyEmployee(
+            emp1.getEmpID(),
+            new Name(
+                emp1.getEmpName().getFirstName(),
+                emp1.getEmpName().getMiddleName(),
+                emp1.getEmpName().getLastName()
+            ),
+            new MyDate(
+                emp1.getBirthDate().getDay(),
+                emp1.getBirthDate().getMonth(),
+                emp1.getBirthDate().getYear()
+            ),
+            new MyDate(
+                emp1.getDateHired().getDay(),
+                emp1.getDateHired().getMonth(),
+                emp1.getDateHired().getYear()
+            ),
+            emp1.getTotalHoursWorked(),
+            emp1.getRatePerHour()
+        );
+
+        System.out.println("======================================================================");
+        System.out.println("OBJECT CONTRACT TESTS (equals & hashCode)");
+        System.out.println("======================================================================");
+        System.out.println("emp1 equals emp1Identical: " + emp1.equals(emp1Identical));
+        System.out.println("emp1 hashCode: " + emp1.hashCode()
+            + " | emp1Identical hashCode: " + emp1Identical.hashCode()
+            + " (Match: " + (emp1.hashCode() == emp1Identical.hashCode()) + ")");
+        System.out.println("emp1 equals emp2: " + emp1.equals(emp2));
+        System.out.println();
     }
 
-    private static void printBirthdayCheck(CommissionEmployee employee) {
-        int birthMonth = employee.getBirthDate().getMonth();
-        int otherMonth = birthMonth == 12 ? 1 : birthMonth + 1;
-        System.out.println(employee.getEmpName());
-        System.out.printf("Regular Month (%s) Salary: %s%n", monthName(otherMonth), HourlyEmployee.money(employee.computeSalary(otherMonth)));
-        System.out.printf("Birth Month (%s) Salary (+P5,000.00): %s%n%n", monthName(birthMonth), HourlyEmployee.money(employee.computeSalary(birthMonth)));
+    private static void printDeepCloneVerification(HourlyEmployee empOriginal) throws CloneNotSupportedException {
+        HourlyEmployee empClone = empOriginal.clone();
+
+        System.out.println("======================================================================");
+        System.out.println("DEEP CLONE VERIFICATION");
+        System.out.println("======================================================================");
+        System.out.println("Original Name before modification: " + empOriginal.getEmpName());
+        empClone.getEmpName().setLastName("Taylor");
+        System.out.println("Clone Name changed to:             " + empClone.getEmpName());
+        System.out.println("Original Name after modification:  " + empOriginal.getEmpName()
+            + " (Deep copy successful!)");
     }
 
-    private static void printBirthdayCheck(BasePlusCommissionEmployee employee) {
-        int birthMonth = employee.getBirthDate().getMonth();
-        int otherMonth = birthMonth == 12 ? 1 : birthMonth + 1;
-        System.out.println(employee.getEmpName());
-        System.out.printf("Regular Month (%s) Salary: %s%n", monthName(otherMonth), HourlyEmployee.money(employee.computeSalary(otherMonth)));
-        System.out.printf("Birth Month (%s) Salary (+P5,000.00): %s%n%n", monthName(birthMonth), HourlyEmployee.money(employee.computeSalary(birthMonth)));
+    private static String formatEmployeeHeader(Employee employee) {
+        return employee.getClass().getSimpleName()
+            + " [ID: " + employee.getEmpID()
+            + ", Name: " + employee.getEmpName()
+            + ", DOB: " + employee.getBirthDate()
+            + ", Hired: " + employee.getDateHired() + "]";
     }
 
-    private static void printBirthdayLine(String name, int birthMonth, HourlyEmployee employee) {
-        int otherMonth = birthMonth == 12 ? 1 : birthMonth + 1;
-        System.out.println(name);
-        System.out.printf("Regular Month (%s) Salary: %s%n", monthName(otherMonth), HourlyEmployee.money(employee.computeSalary(otherMonth)));
-        System.out.printf("Birth Month (%s) Salary (+P5,000.00): %s%n%n", monthName(birthMonth), HourlyEmployee.money(employee.computeSalary(birthMonth)));
+    private static String money(double amount) {
+        return String.format(Locale.US, "₱%,.2f", amount);
     }
 
     private static String monthName(int month) {

@@ -6,9 +6,17 @@ public class PieceWorkerEmployee extends Employee {
 
     public PieceWorkerEmployee() {}
 
-    public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {}
+    public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalPiecesFinished = 0;
+        this.ratePerPiece = 0;
+    }
 
-    public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, int totalPiecesFinished, double ratePerPiece) {}
+    public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, int totalPiecesFinished, double ratePerPiece) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalPiecesFinished = totalPiecesFinished;
+        this.ratePerPiece = ratePerPiece;
+    }
 
     public PieceWorkerEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));

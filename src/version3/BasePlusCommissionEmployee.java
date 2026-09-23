@@ -4,11 +4,23 @@ public class BasePlusCommissionEmployee extends Employee {
     private double totalSale;
     private double baseSalary;
 
-    public BasePlusCommissionEmployee() {}
+    public BasePlusCommissionEmployee() {
+        super();
+        this.totalSale = 0;
+        this.baseSalary = 0;
+    }
 
-    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {}
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalSale = 0;
+        this.baseSalary = 0;
+    }
 
-    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {}
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalSale = totalSale;
+        this.baseSalary = baseSalary;
+    }
 
     public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
