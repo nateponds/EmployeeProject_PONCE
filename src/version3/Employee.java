@@ -1,5 +1,6 @@
 package version3;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Employee implements Cloneable{
@@ -58,7 +59,6 @@ public class Employee implements Cloneable{
         return computeSalary(-1);
     }
 
-    /** Returns only the birthday bonus (₱5,000) or 0. Subclasses add this via super. */
     public double computeSalary(int currentMonth) {
         if (getBirthDate().getMonth() == currentMonth) {
             return 5000;
@@ -106,7 +106,10 @@ public class Employee implements Cloneable{
         return "Employee ID: " + empID + "\n Employee Name: " + empName + "\n Birth Date: " + birthDate + "\n Date Hired: " + dateHired;
     }
 
-    @Override
+    static String money(double amount) {
+        return String.format(Locale.US, "₱%,.2f", amount);
+    }
+
     public void displayEmployee() {
         System.out.println("Employee ID: " + empID);
         System.out.println("Employee Name: " + empName);

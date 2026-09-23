@@ -2,26 +2,27 @@ package version3;
 
 import java.util.Objects;
 
-public class BasePlusCommissionEmployee extends Employee {
-    private double totalSale;
+public class BasePlusCommissionEmployee extends CommissionEmployee {
     private double baseSalary;
 
     public BasePlusCommissionEmployee() {
         super();
-        this.totalSale = 0;
         this.baseSalary = 0;
     }
 
     public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         super(empID, empName, birthDate, dateHired);
-        this.totalSale = 0;
+        this.baseSalary = 0;
+    }
+
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
+        super(empID, empName, birthDate, dateHired, totalSale);
         this.baseSalary = 0;
     }
 
     public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
-        super(empID, empName, birthDate, dateHired);
-        this.totalSale = totalSale;
-        this.baseSalary = baseSalary;
+        super(empID, empName, birthDate, dateHired, totalSale);
+        setBaseSalary(baseSalary);
     }
 
     public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -32,18 +33,8 @@ public class BasePlusCommissionEmployee extends Employee {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalSale, baseSalary);
     }
 
-    public double getTotalSale() {
-        return totalSale;
-    }
-
     public double getBaseSalary() {
         return baseSalary;
-    }
-
-    public void setTotalSale(double totalSale) {
-        if (totalSale >= 0) {
-            this.totalSale = totalSale;
-        }
     }
 
     public void setBaseSalary(double baseSalary) {
@@ -52,25 +43,14 @@ public class BasePlusCommissionEmployee extends Employee {
         }
     }
 
-    private double getCommissionRate() {
-        if (totalSale < 50000) {
-            return 0.05;
-        }
-        if (totalSale < 100000) {
-            return 0.10;
-        }
-        if (totalSale < 500000) {
-            return 0.15;
-        }
-        return 0.20;
-    }
-
+    @Override
     public double computeSalary() {
-        return baseSalary + (totalSale * getCommissionRate());
+        return baseSalary + super.computeSalary();
     }
 
+    @Override
     public double computeSalary(int currentMonth) {
-        return computeSalary() + super.computeSalary(currentMonth);
+        return baseSalary + super.computeSalary(currentMonth);
     }
 
     public void displayBasePlusCommissionEmployee() {
@@ -78,8 +58,8 @@ public class BasePlusCommissionEmployee extends Employee {
                             + " | Name: " + getEmpName()
                             + " | Birth Date: " + getBirthDate()
                             + " | Date Hired: " + getDateHired()
-                            + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
-                            + " | Base Salary: P" + String.format(java.util.Locale.US, "%.2f", baseSalary)
+                            + " | Total Sale: " + money(getTotalSale())
+                            + " | Base Salary: " + money(baseSalary)
         );
     }
 
@@ -89,10 +69,10 @@ public class BasePlusCommissionEmployee extends Employee {
                 + " | Name: " + getEmpName()
                 + " | Birth Date: " + getBirthDate()
                 + " | Date Hired: " + getDateHired()
-                + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
-                + " | Base Salary: P" + String.format(java.util.Locale.US, "%.2f", baseSalary)
+                + " | Total Sale: " + money(getTotalSale())
+                + " | Base Salary: " + money(baseSalary)
                 + " | Commission Rate: " + (getCommissionRate() * 100) + "%"
-                + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+                + " | Computed Salary: " + money(computeSalary());
     }
 
     @Override
@@ -101,12 +81,16 @@ public class BasePlusCommissionEmployee extends Employee {
             return false;
         }
         BasePlusCommissionEmployee other = (BasePlusCommissionEmployee) obj;
-        return Double.compare(totalSale, other.totalSale) == 0
-                && Double.compare(baseSalary, other.baseSalary) == 0;
+        return Double.compare(baseSalary, other.baseSalary) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), totalSale, baseSalary);
+        return Objects.hash(super.hashCode(), baseSalary);
+    }
+
+    @Override
+    public BasePlusCommissionEmployee clone() throws CloneNotSupportedException {
+        return (BasePlusCommissionEmployee) super.clone();
     }
 }

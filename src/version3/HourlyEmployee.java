@@ -1,6 +1,5 @@
 package version3;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class HourlyEmployee extends Employee{
@@ -21,8 +20,8 @@ public class HourlyEmployee extends Employee{
 
     public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
         super(empID, empName, birthDate, dateHired);
-        this.totalHoursWorked = totalHoursWorked;
-        this.ratePerHour = ratePerHour;
+        setTotalHoursWorked(totalHoursWorked);
+        setRatePerHour(ratePerHour);
     }
 
     public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -66,14 +65,14 @@ public class HourlyEmployee extends Employee{
         return computeSalary() + super.computeSalary(currentMonth);
     }
 
-    public void displayHourEmployee() {
+    public void displayHourlyEmployee() {
         System.out.println(
             "ID: " + getEmpID()
             + " | Name: " + getEmpName()
             + " | Birth Date: " + getBirthDate()
             + " | Date Hired: " + getDateHired()
             + " | Total Hours Worked: " + totalHoursWorked
-            + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
+            + " | Rate per hour: " + money(ratePerHour)
         );
     }
 
@@ -84,12 +83,8 @@ public class HourlyEmployee extends Employee{
                 + " | Birth Date: " + getBirthDate()
                 + " | Date Hired: " + getDateHired()
                 + " | Total Hours Worked: " + totalHoursWorked
-                + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
-                + " | Computed Salary: P" + String.format(Locale.US, "%.2f", computeSalary());
-    }
-
-    static String money(double amount) {
-        return String.format(Locale.US, "₱%,.2f", amount);
+                + " | Rate per hour: " + money(ratePerHour)
+                + " | Computed Salary: " + money(computeSalary());
     }
 
     @Override

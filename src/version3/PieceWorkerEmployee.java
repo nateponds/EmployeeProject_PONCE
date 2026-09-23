@@ -20,8 +20,8 @@ public class PieceWorkerEmployee extends Employee {
 
     public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, int totalPiecesFinished, double ratePerPiece) {
         super(empID, empName, birthDate, dateHired);
-        this.totalPiecesFinished = totalPiecesFinished;
-        this.ratePerPiece = ratePerPiece;
+        setTotalPiecesFinished(totalPiecesFinished);
+        setRatePerPiece(ratePerPiece);
     }
 
     public PieceWorkerEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -68,7 +68,7 @@ public class PieceWorkerEmployee extends Employee {
                             + " | Birth Date: " + getBirthDate()
                             + " | Date Hired: " + getDateHired()
                             + " | Total Pieces Finished: " + totalPiecesFinished
-                            + " | Rate Per Piece: P" + String.format(java.util.Locale.US, "%.2f", ratePerPiece)
+                            + " | Rate Per Piece: " + money(ratePerPiece)
         );
     }
 
@@ -79,8 +79,8 @@ public class PieceWorkerEmployee extends Employee {
                 + " | Birth Date: " + getBirthDate()
                 + " | Date Hired: " + getDateHired()
                 + " | Total Pieces Finished: " + totalPiecesFinished
-                + " | Rate Per Piece: P" + String.format(java.util.Locale.US, "%.2f", ratePerPiece)
-                + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+                + " | Rate Per Piece: " + money(ratePerPiece)
+                + " | Computed Salary: " + money(computeSalary());
     }
 
     @Override
@@ -96,5 +96,10 @@ public class PieceWorkerEmployee extends Employee {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), totalPiecesFinished, ratePerPiece);
+    }
+
+    @Override
+    public PieceWorkerEmployee clone() throws CloneNotSupportedException {
+        return (PieceWorkerEmployee) super.clone();
     }
 }

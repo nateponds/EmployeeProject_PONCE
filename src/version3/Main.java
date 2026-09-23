@@ -102,6 +102,8 @@ public class Main {
             + " | emp1Identical hashCode: " + emp1Identical.hashCode()
             + " (Match: " + (emp1.hashCode() == emp1Identical.hashCode()) + ")");
         System.out.println("emp1 equals emp2: " + emp1.equals(emp2));
+        emp1Identical.setTotalHoursWorked(emp1.getTotalHoursWorked() + 1);
+        System.out.println("emp1 equals emp1Modified: " + emp1.equals(emp1Identical));
         System.out.println();
     }
 

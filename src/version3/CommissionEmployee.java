@@ -17,7 +17,7 @@ public class CommissionEmployee extends Employee {
 
     public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
         super(empID, empName, birthDate, dateHired);
-        this.totalSale = totalSale;
+        setTotalSale(totalSale);
     }
 
     public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
@@ -56,15 +56,15 @@ public class CommissionEmployee extends Employee {
     }
 
     public double computeSalary(int currentMonth) {
-        return computeSalary() + super.computeSalary(currentMonth);
+        return totalSale * getCommissionRate() + super.computeSalary(currentMonth);
     }
 
-    public void displayCommissionEmployye() {
+    public void displayCommissionEmployee() {
         System.out.println("ID: " + getEmpID()
                             + " | Name: " + getEmpName()
                             + " | Birth Date: " + getBirthDate()
                             + " | Date Hired: " + getDateHired()
-                            + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
+                            + " | Total Sale: " + money(totalSale)
         );
     }
 
@@ -74,8 +74,8 @@ public class CommissionEmployee extends Employee {
                 + " | Name: " + getEmpName()
                 + " | Birth Date: " + getBirthDate()
                 + " | Date Hired: " + getDateHired()
-                + " | Total Sale: P" + String.format(java.util.Locale.US, "%.2f", totalSale)
-                + " | Computed Salary: P" + String.format(java.util.Locale.US, "%.2f", computeSalary());
+                + " | Total Sale: " + money(totalSale)
+                + " | Computed Salary: " + money(computeSalary());
     }
 
     @Override
@@ -90,5 +90,10 @@ public class CommissionEmployee extends Employee {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), totalSale);
+    }
+
+    @Override
+    public CommissionEmployee clone() throws CloneNotSupportedException {
+        return (CommissionEmployee) super.clone();
     }
 }
