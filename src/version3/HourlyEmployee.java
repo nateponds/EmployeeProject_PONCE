@@ -2,37 +2,15 @@ package version3;
 
 import java.util.Locale;
 
-public class HourlyEmployee {
-    private int empID;
-    private Name empName;
-    private MyDate birthDate;
-    private MyDate dateHired;
+public class HourlyEmployee extends Employee{
     private float totalHoursWorked;
     private double ratePerHour;
 
-    public HourlyEmployee() {
-        this.empID = 0;
-        this.empName = new Name();
-        this.birthDate = new MyDate();
-        this.dateHired = new MyDate();
-        this.totalHoursWorked = 0f;
-        this.ratePerHour = 0;
-    }
+    public HourlyEmployee() {}
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
-        this.empID = empID;
-        this.empName = empName;
-        this.birthDate = birthDate;
-        this.dateHired = dateHired;
-        this.totalHoursWorked = 0f;
-        this.ratePerHour = 0;
-    }
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {}
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
-        this(empID, empName, birthDate, dateHired);
-        setTotalHoursWorked(totalHoursWorked);
-        setRatePerHour(ratePerHour);
-    }
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {}
 
     public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
@@ -42,44 +20,12 @@ public class HourlyEmployee {
         this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalHoursWorked, ratePerHour);
     }
 
-    public int getEmpID() {
-        return empID;
-    }
-
-    public Name getEmpName() {
-        return empName;
-    }
-
-    public MyDate getBirthDate() {
-        return birthDate;
-    }
-
-    public MyDate getDateHired() {
-        return dateHired;
-    }
-
     public float getTotalHoursWorked() {
         return totalHoursWorked;
     }
 
     public double getRatePerHour() {
         return ratePerHour;
-    }
-
-    public void setEmpID(int empID) {
-        this.empID = empID;
-    }
-
-    public void setEmpName(Name empName) {
-        this.empName = empName;
-    }
-
-    public void setBirthDate(MyDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setDateHired(MyDate dateHired) {
-        this.dateHired = dateHired;
     }
 
     public void setTotalHoursWorked(float totalHoursWorked) {
@@ -105,7 +51,7 @@ public class HourlyEmployee {
 
     public double computeSalary(int currentMonth) {
         double bonusPay = 0;
-        if (birthDate.getMonth() == currentMonth) {
+        if (getBirthDate().getMonth() == currentMonth) {
             bonusPay = 5000;
         }
         return computeSalary() + bonusPay;
@@ -113,10 +59,10 @@ public class HourlyEmployee {
 
     public void displayHourEmployee() {
         System.out.println(
-            "ID: " + empID
-            + " | Name: " + empName
-            + " | Birth Date: " + birthDate
-            + " | Date Hired: " + dateHired
+            "ID: " + getEmpID()
+            + " | Name: " + getEmpName()
+            + " | Birth Date: " + getBirthDate()
+            + " | Date Hired: " + getDateHired()
             + " | Total Hours Worked: " + totalHoursWorked
             + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
         );
@@ -124,10 +70,10 @@ public class HourlyEmployee {
 
     @Override
     public String toString() {
-        return "ID: " + empID
-                + " | Name: " + empName
-                + " | Birth Date: " + birthDate
-                + " | Date Hired: " + dateHired
+        return "ID: " + getEmpID()
+                + " | Name: " + getEmpName()
+                + " | Birth Date: " + getBirthDate()
+                + " | Date Hired: " + getDateHired()
                 + " | Total Hours Worked: " + totalHoursWorked
                 + " | Rate per hour: P" + String.format(Locale.US, "%.2f", ratePerHour)
                 + " | Computed Salary: P" + String.format(Locale.US, "%.2f", computeSalary());

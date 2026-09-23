@@ -1,6 +1,6 @@
 package version3;
 
-public class MyDate {
+public class MyDate implements Cloneable {
     private static final String[] MONTHS = {
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"

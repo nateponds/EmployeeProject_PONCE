@@ -1,6 +1,6 @@
 package version3;
 
-public class Name {
+public class Name implements Cloneable{
     private String firstName;
     private String middleName;
     private String lastName;
@@ -78,4 +78,37 @@ public class Name {
         }
         return formatted;
     }
+
+    @Override
+    public boolean equals(Name otherName) {
+        if(this == otherName) {
+            return true;
+        }
+        if(otherName == null) {
+            return false;
+        }
+        if(this.getClass() != otherName.getClass()) {
+            return false;
+        }
+        return this.firstName.equals(otherName.firstName) &&
+               this.middleName.equals(otherName.middleName) &&
+               this.lastName.equals(otherName.lastName) &&
+               this.suffix.equals(otherName.suffix);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, middleName, lastName, suffix);
+    }
+
+    @Override   
+    public Name clone() throws CloneNotSupportedException {
+        Name cloned = (Name) super.clone();
+        cloned.firstName = new String(firstName);
+        cloned.middleName = new String(middleName);
+        cloned.lastName = new String(lastName);
+        cloned.suffix = new String(suffix);
+        return cloned;
+    }
+
 }

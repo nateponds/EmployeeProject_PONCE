@@ -52,5 +52,17 @@ public class Employee implements Cloneable{
         this.dateHired = dateHired;
     }
 
+    public double computeSalary(int currentMonth) {
+        double bonusPay = 0;
+        if(getBirthDate().getMonth() == currentMonth) {
+            bonusPay = 5000;
+        }
+        return computeSalary() + bonusPay;
+    }
+
+    public double computeSalary() {
+        return 0;
+    }
+
 
 }
