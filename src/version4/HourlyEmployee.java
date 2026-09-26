@@ -1,0 +1,109 @@
+package version4;
+
+import java.util.Objects;
+
+public class HourlyEmployee extends Employee{
+    private float totalHoursWorked;
+    private double ratePerHour;
+
+    public HourlyEmployee() {
+        super();
+        this.totalHoursWorked = 0f;
+        this.ratePerHour = 0;
+    }
+
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+        super(empID, empName, birthDate, dateHired);
+        this.totalHoursWorked = 0f;
+        this.ratePerHour = 0;
+    }
+
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
+        super(empID, empName, birthDate, dateHired);
+        setTotalHoursWorked(totalHoursWorked);
+        setRatePerHour(ratePerHour);
+    }
+
+    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    }
+
+    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, float totalHoursWorked, double ratePerHour) {
+        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalHoursWorked, ratePerHour);
+    }
+
+    public float getTotalHoursWorked() {
+        return totalHoursWorked;
+    }
+
+    public double getRatePerHour() {
+        return ratePerHour;
+    }
+
+    public void setTotalHoursWorked(float totalHoursWorked) {
+        if (totalHoursWorked >= 0) {
+            this.totalHoursWorked = totalHoursWorked;
+        }
+    }
+
+    public void setRatePerHour(double ratePerHour) {
+        if (ratePerHour >= 0) {
+            this.ratePerHour = ratePerHour;
+        }
+    }
+
+    public double computeSalary() {
+        if (totalHoursWorked <= 40) {
+            return totalHoursWorked * ratePerHour;
+        }
+        double regPay = 40 * ratePerHour;
+        double otPay = (totalHoursWorked - 40) * (ratePerHour * 1.5);
+        return regPay + otPay;
+    }
+
+    public double computeSalary(int currentMonth) {
+        return computeSalary() + super.computeSalary(currentMonth);
+    }
+
+    public void displayHourlyEmployee() {
+        System.out.println(
+            "ID: " + getEmpID()
+            + " | Name: " + getEmpName()
+            + " | Birth Date: " + getBirthDate()
+            + " | Date Hired: " + getDateHired()
+            + " | Total Hours Worked: " + totalHoursWorked
+            + " | Rate per hour: " + money(ratePerHour)
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + getEmpID()
+                + " | Name: " + getEmpName()
+                + " | Birth Date: " + getBirthDate()
+                + " | Date Hired: " + getDateHired()
+                + " | Total Hours Worked: " + totalHoursWorked
+                + " | Rate per hour: " + money(ratePerHour)
+                + " | Computed Salary: " + money(computeSalary());
+    }
+
+    @Override
+    public HourlyEmployee clone() throws CloneNotSupportedException {
+        return (HourlyEmployee) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        HourlyEmployee other = (HourlyEmployee) obj;
+        return Float.compare(totalHoursWorked, other.totalHoursWorked) == 0
+                && Double.compare(ratePerHour, other.ratePerHour) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), totalHoursWorked, ratePerHour);
+    }
+}
