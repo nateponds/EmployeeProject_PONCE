@@ -1,8 +1,9 @@
-package version4;
+package version5;
 
 import java.util.Objects;
 
 public class CommissionEmployee extends Employee {
+
     private double totalSale;
 
     public CommissionEmployee() {
@@ -10,22 +11,67 @@ public class CommissionEmployee extends Employee {
         this.totalSale = 0;
     }
 
-    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+    public CommissionEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired
+    ) {
         super(empID, empName, birthDate, dateHired);
         this.totalSale = 0;
     }
 
-    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
+    public CommissionEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired,
+        double totalSale
+    ) {
         super(empID, empName, birthDate, dateHired);
         setTotalSale(totalSale);
     }
 
-    public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    public CommissionEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear)
+        );
     }
 
-    public CommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, double totalSale) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalSale);
+    public CommissionEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear,
+        double totalSale
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear),
+            totalSale
+        );
     }
 
     public double getTotalSale() {
@@ -56,27 +102,42 @@ public class CommissionEmployee extends Employee {
     }
 
     public double computeSalary(int currentMonth) {
-        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        double birthdayBonus =
+            getBirthDate().getMonth() == currentMonth ? 5000 : 0;
         return computeSalary() + birthdayBonus;
     }
 
     public void displayCommissionEmployee() {
-        System.out.println("ID: " + getEmpID()
-                            + " | Name: " + getEmpName()
-                            + " | Birth Date: " + getBirthDate()
-                            + " | Date Hired: " + getDateHired()
-                            + " | Total Sale: " + money(totalSale)
+        System.out.println(
+            "ID: " +
+                getEmpID() +
+                " | Name: " +
+                getEmpName() +
+                " | Birth Date: " +
+                getBirthDate() +
+                " | Date Hired: " +
+                getDateHired() +
+                " | Total Sale: " +
+                money(totalSale)
         );
     }
 
     @Override
     public String toString() {
-        return "ID: " + getEmpID()
-                + " | Name: " + getEmpName()
-                + " | Birth Date: " + getBirthDate()
-                + " | Date Hired: " + getDateHired()
-                + " | Total Sale: " + money(totalSale)
-                + " | Computed Salary: " + money(computeSalary());
+        return (
+            "ID: " +
+            getEmpID() +
+            " | Name: " +
+            getEmpName() +
+            " | Birth Date: " +
+            getBirthDate() +
+            " | Date Hired: " +
+            getDateHired() +
+            " | Total Sale: " +
+            money(totalSale) +
+            " | Computed Salary: " +
+            money(computeSalary())
+        );
     }
 
     @Override
@@ -93,4 +154,8 @@ public class CommissionEmployee extends Employee {
         return Objects.hash(super.hashCode(), totalSale);
     }
 
+    @Override
+    public CommissionEmployee clone() throws CloneNotSupportedException {
+        return (CommissionEmployee) super.clone();
+    }
 }

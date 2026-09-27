@@ -1,8 +1,9 @@
-package version4;
+package version5;
 
 import java.util.Objects;
 
-public class Name implements Cloneable{
+public class Name implements Cloneable {
+
     private String firstName;
     private String middleName;
     private String lastName;
@@ -26,7 +27,12 @@ public class Name implements Cloneable{
         this(firstName, middleName, lastName, "");
     }
 
-    public Name(String firstName, String middleName, String lastName, String suffix) {
+    public Name(
+        String firstName,
+        String middleName,
+        String lastName,
+        String suffix
+    ) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -90,10 +96,12 @@ public class Name implements Cloneable{
             return false;
         }
         Name otherName = (Name) obj;
-        return Objects.equals(firstName, otherName.firstName)
-                && Objects.equals(middleName, otherName.middleName)
-                && Objects.equals(lastName, otherName.lastName)
-                && Objects.equals(suffix, otherName.suffix);
+        return (
+            Objects.equals(firstName, otherName.firstName) &&
+            Objects.equals(middleName, otherName.middleName) &&
+            Objects.equals(lastName, otherName.lastName) &&
+            Objects.equals(suffix, otherName.suffix)
+        );
     }
 
     @Override
@@ -101,7 +109,7 @@ public class Name implements Cloneable{
         return Objects.hash(firstName, middleName, lastName, suffix);
     }
 
-    @Override   
+    @Override
     public Name clone() throws CloneNotSupportedException {
         Name cloned = (Name) super.clone();
         cloned.firstName = new String(firstName);
@@ -110,5 +118,4 @@ public class Name implements Cloneable{
         cloned.suffix = new String(suffix);
         return cloned;
     }
-
 }

@@ -1,9 +1,10 @@
-package version4;
+package version5;
 
 import java.util.Locale;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Cloneable {
+
     private int empID;
     private Name empName;
     private MyDate birthDate;
@@ -16,7 +17,12 @@ public class Employee {
         dateHired = new MyDate();
     }
 
-    public Employee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+    public Employee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired
+    ) {
         this.empID = empID;
         this.empName = empName;
         this.birthDate = birthDate;
@@ -55,6 +61,29 @@ public class Employee {
         this.dateHired = dateHired;
     }
 
+    public double computeSalary() {
+        return computeSalary(-1);
+    }
+
+    public double computeSalary(int currentMonth) {
+        return 0.0;
+    }
+
+    @Override
+    public Employee clone() throws CloneNotSupportedException {
+        Employee cloned = (Employee) super.clone();
+        if (empName != null) {
+            cloned.empName = empName.clone();
+        }
+        if (birthDate != null) {
+            cloned.birthDate = birthDate.clone();
+        }
+        if (dateHired != null) {
+            cloned.dateHired = dateHired.clone();
+        }
+        return cloned;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -64,10 +93,12 @@ public class Employee {
             return false;
         }
         Employee other = (Employee) obj;
-        return empID == other.empID
-                && Objects.equals(empName, other.empName)
-                && Objects.equals(birthDate, other.birthDate)
-                && Objects.equals(dateHired, other.dateHired);
+        return (
+            empID == other.empID &&
+            Objects.equals(empName, other.empName) &&
+            Objects.equals(birthDate, other.birthDate) &&
+            Objects.equals(dateHired, other.dateHired)
+        );
     }
 
     @Override
@@ -77,13 +108,20 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee ID: " + empID + "\n Employee Name: " + empName
-                + "\n Birth Date: " + birthDate
-                + "\n Date Hired: " + dateHired;
+        return (
+            "Employee ID: " +
+            empID +
+            "\n Employee Name: " +
+            empName +
+            "\n Birth Date: " +
+            birthDate +
+            "\n Date Hired: " +
+            dateHired
+        );
     }
 
     static String money(double amount) {
-        return String.format(Locale.US, "\u20B1%,.2f", amount);
+        return String.format(Locale.US, "₱%,.2f", amount);
     }
 
     public void displayEmployee() {

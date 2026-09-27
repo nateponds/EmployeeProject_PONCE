@@ -1,11 +1,22 @@
-package version4;
+package version5;
 
 import java.util.Objects;
 
 public class MyDate implements Cloneable {
+
     private static final String[] MONTHS = {
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
     };
 
     private int day;
@@ -20,7 +31,12 @@ public class MyDate implements Cloneable {
 
     public MyDate(int day, int month, int year) {
         this();
-        if (month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth(month, year)) {
+        if (
+            month >= 1 &&
+            month <= 12 &&
+            day >= 1 &&
+            day <= daysInMonth(month, year)
+        ) {
             this.day = day;
             this.month = month;
             this.year = year;

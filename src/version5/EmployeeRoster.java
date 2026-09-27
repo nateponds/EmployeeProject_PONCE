@@ -1,182 +1,184 @@
-package version4;
+package version5;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeRoster {
 
     private static final String SEPARATOR =
-            "======================================================================";
+        "======================================================================";
 
-    private Employee[] empList;
-    private int max;
-    private int count;
+    private final List<Employee> empList;
 
     public EmployeeRoster() {
-        this.max = 10;
-        this.empList = new Employee[max];
-        this.count = 0;
+        empList = new ArrayList<>();
     }
 
-    public EmployeeRoster(int max) {
-        this.max = max;
-        this.empList = new Employee[max];
-        this.count = 0;
+    public EmployeeRoster(int initialCapacity) {
+        empList = new ArrayList<>(initialCapacity);
     }
 
     public boolean addEmployee(Employee emp) {
-        if (emp == null || count >= max) {
+        if (emp == null) {
             return false;
         }
 
-        empList[count] = emp;
-        count++;
+        empList.add(emp);
         return true;
     }
 
     public Employee removeEmployee(int empID) {
         int i;
-        for (i = 0; i < count && empList[i].getEmpID() != empID; i++) {}
-        if (i == count) {
+        for (
+            i = 0;
+            i < empList.size() && empList.get(i).getEmpID() != empID;
+            i++
+        ) {}
+        if (i == empList.size()) {
             return null;
         }
-
-        Employee removed = empList[i];
-        for (int j = i; j < count - 1; j++) {
-            empList[j] = empList[j + 1];
-        }
-
-        count--;
-        empList[count] = null;
-        return removed;
+        return empList.remove(i);
     }
 
     public Employee searchEmployee(int empID) {
-        int i;
-        for (i = 0; i < count && empList[i].getEmpID() != empID; i++) {}
-        return i < count ? empList[i] : null;
+        for (Employee emp : empList) {
+            if (emp.getEmpID() == empID) {
+                return emp;
+            }
+        }
+        return null;
+    }
+
+    public int countEmployees() {
+        return empList.size();
     }
 
     public int countHE() {
         int total = 0;
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof HourlyEmployee) total++;
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof HourlyEmployee) total++;
         }
         return total;
     }
 
     public int countPWE() {
         int total = 0;
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof PieceWorkerEmployee) total++;
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof PieceWorkerEmployee) total++;
         }
         return total;
     }
 
     public int countCE() {
         int total = 0;
-        for (int i = 0; i < count; i++) {
-            if (empList[i].getClass() == CommissionEmployee.class) total++;
+        for (Employee emp : empList) {
+            if (
+                emp instanceof CommissionEmployee &&
+                !(emp instanceof BasePlusCommissionEmployee)
+            ) total++;
         }
         return total;
     }
 
     public int countBPCE() {
         int total = 0;
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof BasePlusCommissionEmployee) total++;
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof BasePlusCommissionEmployee) total++;
         }
         return total;
     }
 
     public void displayHE() {
         System.out.println("\n--- HOURLY EMPLOYEES ---");
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof HourlyEmployee) {
-                ((HourlyEmployee) empList[i]).displayHourlyEmployee();
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof HourlyEmployee) {
+                ((HourlyEmployee) empList.get(i)).displayHourlyEmployee();
             }
         }
     }
 
     public void displayPWE() {
         System.out.println("\n--- PIECE WORKER EMPLOYEES ---");
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof PieceWorkerEmployee) {
-                ((PieceWorkerEmployee) empList[i]).displayPieceWorkerEmployee();
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof PieceWorkerEmployee) {
+                (
+                    (PieceWorkerEmployee) empList.get(i)
+                ).displayPieceWorkerEmployee();
             }
         }
     }
 
     public void displayCE() {
         System.out.println("\n--- COMMISSION EMPLOYEES ---");
-        for (int i = 0; i < count; i++) {
-            if (empList[i].getClass() == CommissionEmployee.class) {
-                ((CommissionEmployee) empList[i]).displayCommissionEmployee();
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i).getClass() == CommissionEmployee.class) {
+                (
+                    (CommissionEmployee) empList.get(i)
+                ).displayCommissionEmployee();
             }
         }
     }
 
     public void displayBPCE() {
         System.out.println("\n--- BASE PLUS COMMISSION EMPLOYEES ---");
-        for (int i = 0; i < count; i++) {
-            if (empList[i] instanceof BasePlusCommissionEmployee) {
-                ((BasePlusCommissionEmployee) empList[i]).displayBasePlusCommissionEmployee();
+        for (int i = 0; i < empList.size(); i++) {
+            if (empList.get(i) instanceof BasePlusCommissionEmployee) {
+                (
+                    (BasePlusCommissionEmployee) empList.get(i)
+                ).displayBasePlusCommissionEmployee();
             }
         }
     }
 
     public void displayAllEmployees() {
-        for (int i = 0; i < count; i++) {
-            Employee emp = empList[i];
-            System.out.println((i + 1) + ". ID: " + emp.getEmpID()
-                    + " | Name: " + emp.getEmpName()
-                    + " | Type: " + emp.getClass().getSimpleName());
+        for (Employee emp : empList) {
+            System.out.println(emp);
         }
     }
 
     public void displayPayroll(int currentMonth) {
         System.out.println("\n" + SEPARATOR);
-        System.out.println("ROSTER PAYROLL REPORT (Target Month: " + monthName(currentMonth) + ")");
+        System.out.println(
+            "PURE POLYMORPHIC PAYROLL REPORT (Target Month: " +
+                monthName(currentMonth) +
+                ")"
+        );
+        System.out.println(
+            "[No downcasting; dynamic dispatch via Employee.computeSalary()]"
+        );
         System.out.println(SEPARATOR);
-        for (int i = 0; i < count; i++) {
-            Employee emp = empList[i];
-            double basePay;
-            double totalPay;
-            String type;
+        for (Employee emp : empList) {
+            double salary = emp.computeSalary(currentMonth);
+            boolean birthdayBonusApplied =
+                emp.getBirthDate().getMonth() == currentMonth;
 
-            if (emp instanceof BasePlusCommissionEmployee) {
-                BasePlusCommissionEmployee employee = (BasePlusCommissionEmployee) emp;
-                basePay = employee.computeSalary();
-                totalPay = employee.computeSalary(currentMonth);
-                type = "Base Plus Commission";
-            } else if (emp instanceof CommissionEmployee) {
-                CommissionEmployee employee = (CommissionEmployee) emp;
-                basePay = employee.computeSalary();
-                totalPay = employee.computeSalary(currentMonth);
-                type = "Commission";
-            } else if (emp instanceof HourlyEmployee) {
-                HourlyEmployee employee = (HourlyEmployee) emp;
-                basePay = employee.computeSalary();
-                totalPay = employee.computeSalary(currentMonth);
-                type = "Hourly";
-            } else if (emp instanceof PieceWorkerEmployee) {
-                PieceWorkerEmployee employee = (PieceWorkerEmployee) emp;
-                basePay = employee.computeSalary();
-                totalPay = employee.computeSalary(currentMonth);
-                type = "Piece Worker";
-            } else {
-                System.out.println("Unsupported employee type: " + emp.getClass().getSimpleName());
-                continue;
-            }
-
-            boolean birthdayMonth = emp.getBirthDate().getMonth() == currentMonth;
-            System.out.println("[" + type + "] ID: " + emp.getEmpID()
-                    + " | Name: " + emp.getEmpName()
-                    + " | Salary: " + Employee.money(totalPay)
-                    + (birthdayMonth ? " (Birthday Bonus Applied)" : ""));
+            System.out.printf(
+                "ID: %d | Name: %-24s | Payout: %s%s%n",
+                emp.getEmpID(),
+                emp.getEmpName(),
+                Employee.money(salary),
+                birthdayBonusApplied ? " (Birthday Bonus Applied)" : ""
+            );
         }
     }
 
     private static String monthName(int month) {
-        String[] names = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        return month >= 1 && month <= 12 ? names[month - 1] : String.valueOf(month);
+        String[] names = {
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        };
+        return month >= 1 && month <= 12
+            ? names[month - 1]
+            : String.valueOf(month);
     }
 }

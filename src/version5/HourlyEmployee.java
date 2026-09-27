@@ -1,8 +1,9 @@
-package version4;
+package version5;
 
 import java.util.Objects;
 
-public class HourlyEmployee extends Employee{
+public class HourlyEmployee extends Employee {
+
     private float totalHoursWorked;
     private double ratePerHour;
 
@@ -12,24 +13,72 @@ public class HourlyEmployee extends Employee{
         this.ratePerHour = 0;
     }
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+    public HourlyEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired
+    ) {
         super(empID, empName, birthDate, dateHired);
         this.totalHoursWorked = 0f;
         this.ratePerHour = 0;
     }
 
-    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
+    public HourlyEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired,
+        float totalHoursWorked,
+        double ratePerHour
+    ) {
         super(empID, empName, birthDate, dateHired);
         setTotalHoursWorked(totalHoursWorked);
         setRatePerHour(ratePerHour);
     }
 
-    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    public HourlyEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear)
+        );
     }
 
-    public HourlyEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, float totalHoursWorked, double ratePerHour) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalHoursWorked, ratePerHour);
+    public HourlyEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear,
+        float totalHoursWorked,
+        double ratePerHour
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear),
+            totalHoursWorked,
+            ratePerHour
+        );
     }
 
     public float getTotalHoursWorked() {
@@ -62,30 +111,46 @@ public class HourlyEmployee extends Employee{
     }
 
     public double computeSalary(int currentMonth) {
-        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        double birthdayBonus =
+            getBirthDate().getMonth() == currentMonth ? 5000 : 0;
         return computeSalary() + birthdayBonus;
     }
 
     public void displayHourlyEmployee() {
         System.out.println(
-            "ID: " + getEmpID()
-            + " | Name: " + getEmpName()
-            + " | Birth Date: " + getBirthDate()
-            + " | Date Hired: " + getDateHired()
-            + " | Total Hours Worked: " + totalHoursWorked
-            + " | Rate per hour: " + money(ratePerHour)
+            "ID: " +
+                getEmpID() +
+                " | Name: " +
+                getEmpName() +
+                " | Birth Date: " +
+                getBirthDate() +
+                " | Date Hired: " +
+                getDateHired() +
+                " | Total Hours Worked: " +
+                totalHoursWorked +
+                " | Rate per hour: " +
+                money(ratePerHour)
         );
     }
 
     @Override
     public String toString() {
-        return "ID: " + getEmpID()
-                + " | Name: " + getEmpName()
-                + " | Birth Date: " + getBirthDate()
-                + " | Date Hired: " + getDateHired()
-                + " | Total Hours Worked: " + totalHoursWorked
-                + " | Rate per hour: " + money(ratePerHour)
-                + " | Computed Salary: " + money(computeSalary());
+        return (
+            "ID: " +
+            getEmpID() +
+            " | Name: " +
+            getEmpName() +
+            " | Birth Date: " +
+            getBirthDate() +
+            " | Date Hired: " +
+            getDateHired() +
+            " | Total Hours Worked: " +
+            totalHoursWorked +
+            " | Rate per hour: " +
+            money(ratePerHour) +
+            " | Computed Salary: " +
+            money(computeSalary())
+        );
     }
 
     @Override
@@ -94,12 +159,19 @@ public class HourlyEmployee extends Employee{
             return false;
         }
         HourlyEmployee other = (HourlyEmployee) obj;
-        return Float.compare(totalHoursWorked, other.totalHoursWorked) == 0
-                && Double.compare(ratePerHour, other.ratePerHour) == 0;
+        return (
+            Float.compare(totalHoursWorked, other.totalHoursWorked) == 0 &&
+            Double.compare(ratePerHour, other.ratePerHour) == 0
+        );
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), totalHoursWorked, ratePerHour);
+    }
+
+    @Override
+    public HourlyEmployee clone() throws CloneNotSupportedException {
+        return (HourlyEmployee) super.clone();
     }
 }

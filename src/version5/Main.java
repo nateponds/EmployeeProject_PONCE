@@ -1,114 +1,99 @@
-package version4;
+package version5;
 
 public class Main {
+
     private static final String SEPARATOR =
-            "======================================================================";
+        "======================================================================";
 
     public static void main(String[] args) {
-        final int rosterCapacity = 6;
-        final int currentMonth = 9;
-        EmployeeRoster roster = new EmployeeRoster(rosterCapacity);
+        EmployeeRoster roster = new EmployeeRoster();
 
         HourlyEmployee alice = new HourlyEmployee(
-                101,
-                new Name("Alice", "Marie", "Smith"),
-                new MyDate(18, 9, 2000),
-                new MyDate(1, 6, 2022),
-                45f,
-                200
+            101,
+            new Name("Alice", "Marie", "Smith"),
+            new MyDate(18, 9, 2000),
+            new MyDate(1, 6, 2022),
+            45,
+            200
         );
-
         PieceWorkerEmployee bob = new PieceWorkerEmployee(
-                201,
-                new Name("Bob", "Carlos", "Jones", "Jr."),
-                new MyDate(5, 4, 1998),
-                new MyDate(15, 1, 2023),
-                250,
-                15
+            201,
+            new Name("Bob", "Carlos", "Jones", "Jr."),
+            new MyDate(5, 4, 1998),
+            new MyDate(15, 1, 2023),
+            250,
+            15
         );
-
         CommissionEmployee maria = new CommissionEmployee(
-                301,
-                new Name("Maria", "L", "Reyes"),
-                new MyDate(14, 9, 1992),
-                new MyDate(20, 5, 2018),
-                100000
+            301,
+            new Name("Maria", "L", "Reyes"),
+            new MyDate(14, 9, 1992),
+            new MyDate(20, 5, 2018),
+            100000
         );
-
         BasePlusCommissionEmployee kevin = new BasePlusCommissionEmployee(
-                401,
-                new Name("Kevin", "S", "Tan"),
-                new MyDate(8, 3, 1990),
-                new MyDate(1, 4, 2017),
-                100000,
-                17000
-        );
-
-        HourlyEmployee david = new HourlyEmployee(
-                102,
-                new Name("David", "A", "White"),
-                new MyDate(10, 1, 1995),
-                new MyDate(12, 8, 2021),
-                32f,
-                250
+            401,
+            new Name("Kevin", "S", "Tan"),
+            new MyDate(8, 3, 1990),
+            new MyDate(1, 4, 2017),
+            100000,
+            17000
         );
 
         System.out.println(SEPARATOR);
-        System.out.println("EMPLOYEE ROSTER INITIALIZATION & ENROLLMENT");
+        System.out.println("DYNAMIC ROSTER INITIALIZATION (ArrayList Backend)");
         System.out.println(SEPARATOR);
+        enroll(roster, alice, "Hourly");
+        enroll(roster, bob, "Piece Worker");
+        enroll(roster, maria, "Commission");
+        enroll(roster, kevin, "Base Plus Commission");
+        System.out.println("Total Roster Size: " + roster.countEmployees() + " employees");
 
-        printAddition(roster.addEmployee(alice), alice, "Hourly");
-        printAddition(roster.addEmployee(bob), bob, "Piece Worker");
-        printAddition(roster.addEmployee(maria), maria, "Commission");
-        printAddition(roster.addEmployee(kevin), kevin, "Base Plus Commission");
-        printAddition(roster.addEmployee(david), david, "Hourly");
-
-        EmployeeRoster capacityCheck = new EmployeeRoster(1);
-        capacityCheck.addEmployee(alice);
-        boolean rejectedWhenFull = !capacityCheck.addEmployee(bob);
-        System.out.println("Capacity Check: Attempt beyond full roster -> "
-                + (rejectedWhenFull ? "Rejected (Passed)" : "Accepted (Failed)"));
-
-        System.out.println("\n--- ROSTER COMPOSITION COUNTS ---");
-        System.out.println("Total Employees: 5 / " + rosterCapacity);
-        System.out.println("Hourly Employees: " + roster.countHE());
-        System.out.println("Piece Worker Employees: " + roster.countPWE());
-        System.out.println("Commission Employees (Pure): " + roster.countCE());
-        System.out.println("Base Plus Commission Employees: " + roster.countBPCE());
-
-        System.out.println("\n--- CATEGORICAL EMPLOYEE DISPLAYS ---");
-        roster.displayHE();
-        roster.displayPWE();
-        roster.displayCE();
-        roster.displayBPCE();
-
-        System.out.println("\n--- EMPLOYEE SEARCH ---");
-        Employee searchResult = roster.searchEmployee(301);
-        System.out.println("Search Employee ID 301: "
-                + (searchResult == null
-                ? "Not Found"
-                : "Found - " + searchResult.getEmpName()));
-
-        roster.displayPayroll(currentMonth);
+        System.out.println();
+        roster.displayPayroll(9);
 
         System.out.println("\n" + SEPARATOR);
-        System.out.println("TESTING EMPLOYEE REMOVAL & ARRAY COMPACTION");
+        System.out.println("COLLECTION REMOVAL TEST");
         System.out.println(SEPARATOR);
-        System.out.println("Removing Employee ID 201 (" + bob.getEmpName() + ")...");
-
         Employee removed = roster.removeEmployee(201);
-        System.out.println(removed == null
-                ? "Employee not found."
-                : "Successfully removed.");
-        System.out.println("Current Employee Count: 4");
-        System.out.println("\nRemaining Employees in Roster:");
-        roster.displayAllEmployees();
+        System.out.println(
+            "Removing Employee ID 201... " +
+            (removed == null ? "Employee not found." : "Successfully removed.")
+        );
+        System.out.println("Updated Roster Size: " + roster.countEmployees());
+
+        System.out.println("\nCurrent Active Employees:");
+        displayActiveEmployees(roster, 101, 301, 401);
         System.out.println(SEPARATOR);
     }
 
-    private static void printAddition(boolean added, Employee employee, String type) {
-        System.out.println("Added: " + employee.getEmpName()
-                + " (" + type + ") -> "
-                + (added ? "Success" : "Failed"));
+    private static void enroll(
+        EmployeeRoster roster,
+        Employee employee,
+        String employeeType
+    ) {
+        if (roster.addEmployee(employee)) {
+            System.out.println("Enrolled: " + employee.getEmpName() + " (" + employeeType + ")");
+        }
+    }
+
+    private static void displayActiveEmployees(
+        EmployeeRoster roster,
+        int... employeeIds
+    ) {
+        int position = 1;
+        for (int employeeId : employeeIds) {
+            Employee employee = roster.searchEmployee(employeeId);
+            if (employee != null) {
+                System.out.printf(
+                    "%d. %s [ID: %d, Name: %s, Total Salary: %s]%n",
+                    position++,
+                    employee.getClass().getSimpleName(),
+                    employee.getEmpID(),
+                    employee.getEmpName(),
+                    Employee.money(employee.computeSalary())
+                );
+            }
+        }
     }
 }

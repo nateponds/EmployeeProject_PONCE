@@ -1,8 +1,9 @@
-package version4;
+package version5;
 
 import java.util.Objects;
 
 public class BasePlusCommissionEmployee extends CommissionEmployee {
+
     private double baseSalary;
 
     public BasePlusCommissionEmployee() {
@@ -10,27 +11,81 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
         this.baseSalary = 0;
     }
 
-    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
+    public BasePlusCommissionEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired
+    ) {
         super(empID, empName, birthDate, dateHired);
         this.baseSalary = 0;
     }
 
-    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
+    public BasePlusCommissionEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired,
+        double totalSale
+    ) {
         super(empID, empName, birthDate, dateHired, totalSale);
         this.baseSalary = 0;
     }
 
-    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
+    public BasePlusCommissionEmployee(
+        int empID,
+        Name empName,
+        MyDate birthDate,
+        MyDate dateHired,
+        double totalSale,
+        double baseSalary
+    ) {
         super(empID, empName, birthDate, dateHired, totalSale);
         setBaseSalary(baseSalary);
     }
 
-    public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear));
+    public BasePlusCommissionEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear)
+        );
     }
 
-    public BasePlusCommissionEmployee(int empID, String firstName, String middleName, String lastName, int birthDay, int birthMonth, int birthYear, int hiredDay, int hiredMonth, int hiredYear, double totalSale, double baseSalary) {
-        this(empID, new Name(firstName, middleName, lastName), new MyDate(birthDay, birthMonth, birthYear), new MyDate(hiredDay, hiredMonth, hiredYear), totalSale, baseSalary);
+    public BasePlusCommissionEmployee(
+        int empID,
+        String firstName,
+        String middleName,
+        String lastName,
+        int birthDay,
+        int birthMonth,
+        int birthYear,
+        int hiredDay,
+        int hiredMonth,
+        int hiredYear,
+        double totalSale,
+        double baseSalary
+    ) {
+        this(
+            empID,
+            new Name(firstName, middleName, lastName),
+            new MyDate(birthDay, birthMonth, birthYear),
+            new MyDate(hiredDay, hiredMonth, hiredYear),
+            totalSale,
+            baseSalary
+        );
     }
 
     public double getBaseSalary() {
@@ -50,30 +105,49 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 
     @Override
     public double computeSalary(int currentMonth) {
-        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        double birthdayBonus =
+            getBirthDate().getMonth() == currentMonth ? 5000 : 0;
         return computeSalary() + birthdayBonus;
     }
 
     public void displayBasePlusCommissionEmployee() {
-        System.out.println("ID: " + getEmpID()
-                            + " | Name: " + getEmpName()
-                            + " | Birth Date: " + getBirthDate()
-                            + " | Date Hired: " + getDateHired()
-                            + " | Total Sale: " + money(getTotalSale())
-                            + " | Base Salary: " + money(baseSalary)
+        System.out.println(
+            "ID: " +
+                getEmpID() +
+                " | Name: " +
+                getEmpName() +
+                " | Birth Date: " +
+                getBirthDate() +
+                " | Date Hired: " +
+                getDateHired() +
+                " | Total Sale: " +
+                money(getTotalSale()) +
+                " | Base Salary: " +
+                money(baseSalary)
         );
     }
 
     @Override
     public String toString() {
-        return "ID: " + getEmpID()
-                + " | Name: " + getEmpName()
-                + " | Birth Date: " + getBirthDate()
-                + " | Date Hired: " + getDateHired()
-                + " | Total Sale: " + money(getTotalSale())
-                + " | Base Salary: " + money(baseSalary)
-                + " | Commission Rate: " + (getCommissionRate() * 100) + "%"
-                + " | Computed Salary: " + money(computeSalary());
+        return (
+            "ID: " +
+            getEmpID() +
+            " | Name: " +
+            getEmpName() +
+            " | Birth Date: " +
+            getBirthDate() +
+            " | Date Hired: " +
+            getDateHired() +
+            " | Total Sale: " +
+            money(getTotalSale()) +
+            " | Base Salary: " +
+            money(baseSalary) +
+            " | Commission Rate: " +
+            getCommissionRate() * 100 +
+            "%" +
+            " | Computed Salary: " +
+            money(computeSalary())
+        );
     }
 
     @Override
@@ -90,4 +164,9 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
         return Objects.hash(super.hashCode(), baseSalary);
     }
 
+    @Override
+    public BasePlusCommissionEmployee clone()
+        throws CloneNotSupportedException {
+        return (BasePlusCommissionEmployee) super.clone();
+    }
 }
