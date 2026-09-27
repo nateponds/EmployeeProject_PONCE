@@ -59,7 +59,8 @@ public class PieceWorkerEmployee extends Employee {
     }
 
     public double computeSalary(int currentMonth) {
-        return computeSalary() + super.computeSalary(currentMonth);
+        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        return computeSalary() + birthdayBonus;
     }
 
     public void displayPieceWorkerEmployee() {
@@ -98,8 +99,4 @@ public class PieceWorkerEmployee extends Employee {
         return Objects.hash(super.hashCode(), totalPiecesFinished, ratePerPiece);
     }
 
-    @Override
-    public PieceWorkerEmployee clone() throws CloneNotSupportedException {
-        return (PieceWorkerEmployee) super.clone();
-    }
 }

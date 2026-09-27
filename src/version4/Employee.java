@@ -3,7 +3,7 @@ package version4;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Employee implements Cloneable{
+public class Employee {
     private int empID;
     private Name empName;
     private MyDate birthDate;
@@ -55,32 +55,6 @@ public class Employee implements Cloneable{
         this.dateHired = dateHired;
     }
 
-    public double computeSalary() {
-        return computeSalary(-1);
-    }
-
-    public double computeSalary(int currentMonth) {
-        if (getBirthDate().getMonth() == currentMonth) {
-            return 5000;
-        }
-        return 0;
-    }
-
-    @Override
-    public Employee clone() throws CloneNotSupportedException {
-        Employee cloned = (Employee) super.clone();
-        if (empName != null) {
-            cloned.empName = empName.clone();
-        }
-        if (birthDate != null) {
-            cloned.birthDate = birthDate.clone();
-        }
-        if (dateHired != null) {
-            cloned.dateHired = dateHired.clone();
-        }
-        return cloned;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -103,11 +77,13 @@ public class Employee implements Cloneable{
 
     @Override
     public String toString() {
-        return "Employee ID: " + empID + "\n Employee Name: " + empName + "\n Birth Date: " + birthDate + "\n Date Hired: " + dateHired;
+        return "Employee ID: " + empID + "\n Employee Name: " + empName
+                + "\n Birth Date: " + birthDate
+                + "\n Date Hired: " + dateHired;
     }
 
     static String money(double amount) {
-        return String.format(Locale.US, "₱%,.2f", amount);
+        return String.format(Locale.US, "\u20B1%,.2f", amount);
     }
 
     public void displayEmployee() {
@@ -116,6 +92,4 @@ public class Employee implements Cloneable{
         System.out.println("Birth Date: " + birthDate);
         System.out.println("Date Hired: " + dateHired);
     }
-
-    
 }

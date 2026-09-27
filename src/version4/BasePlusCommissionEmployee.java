@@ -50,7 +50,8 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 
     @Override
     public double computeSalary(int currentMonth) {
-        return baseSalary + super.computeSalary(currentMonth);
+        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        return computeSalary() + birthdayBonus;
     }
 
     public void displayBasePlusCommissionEmployee() {
@@ -89,8 +90,4 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
         return Objects.hash(super.hashCode(), baseSalary);
     }
 
-    @Override
-    public BasePlusCommissionEmployee clone() throws CloneNotSupportedException {
-        return (BasePlusCommissionEmployee) super.clone();
-    }
 }

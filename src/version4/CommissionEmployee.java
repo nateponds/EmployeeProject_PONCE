@@ -56,7 +56,8 @@ public class CommissionEmployee extends Employee {
     }
 
     public double computeSalary(int currentMonth) {
-        return totalSale * getCommissionRate() + super.computeSalary(currentMonth);
+        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        return computeSalary() + birthdayBonus;
     }
 
     public void displayCommissionEmployee() {
@@ -92,8 +93,4 @@ public class CommissionEmployee extends Employee {
         return Objects.hash(super.hashCode(), totalSale);
     }
 
-    @Override
-    public CommissionEmployee clone() throws CloneNotSupportedException {
-        return (CommissionEmployee) super.clone();
-    }
 }

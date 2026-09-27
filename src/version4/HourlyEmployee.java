@@ -62,7 +62,8 @@ public class HourlyEmployee extends Employee{
     }
 
     public double computeSalary(int currentMonth) {
-        return computeSalary() + super.computeSalary(currentMonth);
+        double birthdayBonus = getBirthDate().getMonth() == currentMonth ? 5000 : 0;
+        return computeSalary() + birthdayBonus;
     }
 
     public void displayHourlyEmployee() {
@@ -85,11 +86,6 @@ public class HourlyEmployee extends Employee{
                 + " | Total Hours Worked: " + totalHoursWorked
                 + " | Rate per hour: " + money(ratePerHour)
                 + " | Computed Salary: " + money(computeSalary());
-    }
-
-    @Override
-    public HourlyEmployee clone() throws CloneNotSupportedException {
-        return (HourlyEmployee) super.clone();
     }
 
     @Override
