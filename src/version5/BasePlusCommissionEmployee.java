@@ -56,12 +56,8 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
         int hiredMonth,
         int hiredYear
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear)
-        );
+        super(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear);
     }
 
     public BasePlusCommissionEmployee(
@@ -78,14 +74,9 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
         double totalSale,
         double baseSalary
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear),
-            totalSale,
-            baseSalary
-        );
+        super(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear, totalSale);
+        setBaseSalary(baseSalary);
     }
 
     public double getBaseSalary() {

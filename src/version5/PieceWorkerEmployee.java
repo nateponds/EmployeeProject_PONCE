@@ -49,12 +49,8 @@ public class PieceWorkerEmployee extends Employee {
         int hiredMonth,
         int hiredYear
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear)
-        );
+        super(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear);
     }
 
     public PieceWorkerEmployee(
@@ -71,14 +67,10 @@ public class PieceWorkerEmployee extends Employee {
         int totalPiecesFinished,
         double ratePerPiece
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear),
-            totalPiecesFinished,
-            ratePerPiece
-        );
+        this(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear);
+        setTotalPiecesFinished(totalPiecesFinished);
+        setRatePerPiece(ratePerPiece);
     }
 
     public int getTotalPiecesFinished() {

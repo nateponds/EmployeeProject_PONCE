@@ -49,12 +49,8 @@ public class HourlyEmployee extends Employee {
         int hiredMonth,
         int hiredYear
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear)
-        );
+        super(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear);
     }
 
     public HourlyEmployee(
@@ -71,14 +67,10 @@ public class HourlyEmployee extends Employee {
         float totalHoursWorked,
         double ratePerHour
     ) {
-        this(
-            empID,
-            new Name(firstName, middleName, lastName),
-            new MyDate(birthDay, birthMonth, birthYear),
-            new MyDate(hiredDay, hiredMonth, hiredYear),
-            totalHoursWorked,
-            ratePerHour
-        );
+        this(empID, firstName, middleName, lastName, birthDay, birthMonth,
+            birthYear, hiredDay, hiredMonth, hiredYear);
+        setTotalHoursWorked(totalHoursWorked);
+        setRatePerHour(ratePerHour);
     }
 
     public float getTotalHoursWorked() {
